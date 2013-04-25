@@ -34,26 +34,26 @@
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idpedidoint:</label>
+			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Idpedidoint:</label>
 			<input type="text" name="idpedidoint" class="txt_idpedidoint" value="<?php echo $this->datos['idpedidoint']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idalmacen:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Idalmacen:</label>
 			<input type="text" name="idalmacen" class="txt_idalmacen" value="<?php echo $this->datos['idalmacen']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">fecha:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Fecha:</label>
 			<input type="text" name="fecha" class="txt_fecha" value="<?php echo $this->datos['fecha']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">vencimiento:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Vencimiento:</label>
 			<input type="text" name="vencimiento" class="txt_vencimiento" value="<?php echo $this->datos['vencimiento']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idestado:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Idestado:</label>
 			<input type="text" name="idestado" class="txt_idestado" value="<?php echo $this->datos['idestado']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">serie:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Serie:</label>
 			<input type="text" name="serie" class="txt_serie" value="<?php echo $this->datos['serie']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">folio:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Folio:</label>
 			<input type="text" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:500px;" />
 		</div>
 		</form>

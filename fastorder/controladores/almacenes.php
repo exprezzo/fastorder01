@@ -4,6 +4,7 @@ class almacenes extends Controlador{
 	var $modelo="almacenes";
 	var $campos=array('id','nombre');
 	var $pk="id";
+	var $nombre="almacenes";
 	
 	function nuevo(){		
 		$campos=$this->campos;

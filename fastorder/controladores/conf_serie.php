@@ -2,8 +2,9 @@
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/conf_serie_modelo.php';
 class conf_serie extends Controlador{
 	var $modelo="conf_serie";
-	var $campos=array('idconf_serie','serie','folio_i','folio_f','sig_folio','es_default','idalmacen','proceso');
+	var $campos=array('idconf_serie','serie','folio_i','folio_f','sig_folio','es_default','idalmacen','proceso','idempresa','idsucursal');
 	var $pk="idconf_serie";
+	var $nombre="conf_serie";
 	
 	function nuevo(){		
 		$campos=$this->campos;

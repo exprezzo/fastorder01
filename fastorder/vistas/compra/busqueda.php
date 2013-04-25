@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'compra'
+
 			},			
 			pk:"idcompra"
 			

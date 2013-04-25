@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'empresa'
+
 			},			
 			pk:"idempresa"
 			

@@ -4,6 +4,7 @@ class ordencompra extends Controlador{
 	var $modelo="ordencompra";
 	var $campos=array('idordencompra','idproveedor','fecha','vencimiento','idestado','serie','folio','idalmacen','enviada','impresa');
 	var $pk="idordencompra";
+	var $nombre="ordencompra";
 	
 	function nuevo(){		
 		$campos=$this->campos;

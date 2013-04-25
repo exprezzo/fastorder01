@@ -4,6 +4,7 @@ class proveedor extends Controlador{
 	var $modelo="proveedor";
 	var $campos=array('idproveedor','nombre','razonsocial','rfc','calle','numint','colonia','ciudad','estado','pais','cp','telefono','email','fax','conven','conventel','convenfax','convenema','concom','concomtel','concomfax','concomema','diacre','despropag','limcre','observaciones');
 	var $pk="idproveedor";
+	var $nombre="proveedor";
 	
 	function nuevo(){		
 		$campos=$this->campos;

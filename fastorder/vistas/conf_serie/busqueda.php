@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'conf_serie'
+
 			},			
 			pk:"idconf_serie"
 			

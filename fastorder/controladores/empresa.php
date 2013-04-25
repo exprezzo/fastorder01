@@ -4,6 +4,7 @@ class empresa extends Controlador{
 	var $modelo="empresa";
 	var $campos=array('idempresa','nombre','razonsocial','calle','numint','numext','ciudad','estado','pais','telefono','fax','email');
 	var $pk="idempresa";
+	var $nombre="empresa";
 	
 	function nuevo(){		
 		$campos=$this->campos;

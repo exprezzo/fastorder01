@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'ordencompra'
+
 			},			
 			pk:"idordencompra"
 			

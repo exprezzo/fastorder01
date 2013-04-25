@@ -12,6 +12,7 @@
 	$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+
 			data: params
 		}).done(function( response ) {		
 			var resp = eval('(' + response + ')');
@@ -49,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("Â¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -101,7 +102,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("¿Eliminar?");
+						var r=confirm("?liminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -123,7 +124,7 @@
 						
 					break;
 					case 'imprimir':
-						alert("Imprimir en construcción");
+						alert("Imprimir en construcciÃ³n");
 					break;
 				}
 				
@@ -168,6 +169,28 @@
 			data:dataSource,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "idcompra", visible:true, headerText: "Idcompra" },
+{ dataKey: "idproveedor", visible:true, headerText: "Idproveedor" },
+{ dataKey: "idalmacen", visible:true, headerText: "Idalmacen" },
+{ dataKey: "idcxp", visible:true, headerText: "Idcxp" },
+{ dataKey: "tipo", visible:true, headerText: "Tipo" },
+{ dataKey: "serie", visible:true, headerText: "Serie" },
+{ dataKey: "folio", visible:true, headerText: "Folio" },
+{ dataKey: "documento", visible:true, headerText: "Documento" },
+{ dataKey: "fecha", visible:true, headerText: "Fecha" },
+{ dataKey: "fechavence", visible:true, headerText: "Fechavence" },
+{ dataKey: "descuento", visible:true, headerText: "Descuento" },
+{ dataKey: "subtotal", visible:true, headerText: "Subtotal" },
+{ dataKey: "impuesto1", visible:true, headerText: "Impuesto1" },
+{ dataKey: "impuesto2", visible:true, headerText: "Impuesto2" },
+{ dataKey: "impuesto3", visible:true, headerText: "Impuesto3" },
+{ dataKey: "total", visible:true, headerText: "Total" },
+{ dataKey: "nota", visible:true, headerText: "Nota" },
+{ dataKey: "estado", visible:true, headerText: "Estado" },
+{ dataKey: "idinvmov", visible:true, headerText: "Idinvmov" },
+{ dataKey: "impreso", visible:true, headerText: "Impreso" },
+{ dataKey: "enviado", visible:true, headerText: "Enviado" }
 			]
 		});
 		

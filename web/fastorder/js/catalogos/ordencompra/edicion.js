@@ -148,9 +148,9 @@
 					icon='/web/'+kore.modulo+'/images/info.png';
 				}
 				
-				title= 'Success';
+				title= 'Success';				
+				// tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
 				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-				
 				
 				me.actualizarTitulo();
 				me.editado=false;
@@ -204,6 +204,7 @@
 		$.ajax({
 				type: "POST",
 				url: '/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/eliminar',
+
 				data: params
 			}).done(function( response ) {		
 				var resp = eval('(' + response + ')');
@@ -243,7 +244,8 @@
 	
 	this.configurarFormulario=function(tabId){		
 		var me=this;
-		
+		$(this.tabId+' input[type="text"]').wijtextbox();		
+		$(this.tabId+' textarea').wijtextbox();		
 	
 		
 		

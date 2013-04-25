@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'pedidoint'
+
 			},			
 			pk:"idpedidoint"
 			

@@ -12,6 +12,7 @@
 	$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+
 			data: params
 		}).done(function( response ) {		
 			var resp = eval('(' + response + ')');
@@ -49,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("Â¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -101,7 +102,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("¿Eliminar?");
+						var r=confirm("?liminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -123,7 +124,7 @@
 						
 					break;
 					case 'imprimir':
-						alert("Imprimir en construcción");
+						alert("Imprimir en construcciÃ³n");
 					break;
 				}
 				
@@ -168,6 +169,19 @@
 			data:dataSource,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "idempresa", visible:true, headerText: "Idempresa" },
+{ dataKey: "nombre", visible:true, headerText: "Nombre" },
+{ dataKey: "razonsocial", visible:true, headerText: "Razonsocial" },
+{ dataKey: "calle", visible:true, headerText: "Calle" },
+{ dataKey: "numint", visible:true, headerText: "Numint" },
+{ dataKey: "numext", visible:true, headerText: "Numext" },
+{ dataKey: "ciudad", visible:true, headerText: "Ciudad" },
+{ dataKey: "estado", visible:true, headerText: "Estado" },
+{ dataKey: "pais", visible:true, headerText: "Pais" },
+{ dataKey: "telefono", visible:true, headerText: "Telefono" },
+{ dataKey: "fax", visible:true, headerText: "Fax" },
+{ dataKey: "email", visible:true, headerText: "Email" }
 			]
 		});
 		

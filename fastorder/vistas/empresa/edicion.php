@@ -34,41 +34,41 @@
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idempresa:</label>
+			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Idempresa:</label>
 			<input type="text" name="idempresa" class="txt_idempresa" value="<?php echo $this->datos['idempresa']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">nombre:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Nombre:</label>
 			<input type="text" name="nombre" class="txt_nombre" value="<?php echo $this->datos['nombre']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">razonsocial:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Razonsocial:</label>
 			<input type="text" name="razonsocial" class="txt_razonsocial" value="<?php echo $this->datos['razonsocial']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">calle:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Calle:</label>
 			<input type="text" name="calle" class="txt_calle" value="<?php echo $this->datos['calle']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">numint:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Numint:</label>
 			<input type="text" name="numint" class="txt_numint" value="<?php echo $this->datos['numint']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">numext:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Numext:</label>
 			<input type="text" name="numext" class="txt_numext" value="<?php echo $this->datos['numext']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">ciudad:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Ciudad:</label>
 			<input type="text" name="ciudad" class="txt_ciudad" value="<?php echo $this->datos['ciudad']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">estado:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Estado:</label>
 			<input type="text" name="estado" class="txt_estado" value="<?php echo $this->datos['estado']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">pais:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Pais:</label>
 			<input type="text" name="pais" class="txt_pais" value="<?php echo $this->datos['pais']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">telefono:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Telefono:</label>
 			<input type="text" name="telefono" class="txt_telefono" value="<?php echo $this->datos['telefono']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">fax:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Fax:</label>
 			<input type="text" name="fax" class="txt_fax" value="<?php echo $this->datos['fax']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">email:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Email:</label>
 			<input type="text" name="email" class="txt_email" value="<?php echo $this->datos['email']; ?>" style="width:500px;" />
 		</div>
 		</form>

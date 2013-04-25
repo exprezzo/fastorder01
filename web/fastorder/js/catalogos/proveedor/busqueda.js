@@ -12,6 +12,7 @@
 	$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+
 			data: params
 		}).done(function( response ) {		
 			var resp = eval('(' + response + ')');
@@ -49,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("Â¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -101,7 +102,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("¿Eliminar?");
+						var r=confirm("?liminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -123,7 +124,7 @@
 						
 					break;
 					case 'imprimir':
-						alert("Imprimir en construcción");
+						alert("Imprimir en construcciÃ³n");
 					break;
 				}
 				
@@ -168,6 +169,33 @@
 			data:dataSource,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "idproveedor", visible:true, headerText: "Idproveedor" },
+{ dataKey: "nombre", visible:true, headerText: "Nombre" },
+{ dataKey: "razonsocial", visible:true, headerText: "Razonsocial" },
+{ dataKey: "rfc", visible:true, headerText: "Rfc" },
+{ dataKey: "calle", visible:true, headerText: "Calle" },
+{ dataKey: "numint", visible:true, headerText: "Numint" },
+{ dataKey: "colonia", visible:true, headerText: "Colonia" },
+{ dataKey: "ciudad", visible:true, headerText: "Ciudad" },
+{ dataKey: "estado", visible:true, headerText: "Estado" },
+{ dataKey: "pais", visible:true, headerText: "Pais" },
+{ dataKey: "cp", visible:true, headerText: "Cp" },
+{ dataKey: "telefono", visible:true, headerText: "Telefono" },
+{ dataKey: "email", visible:true, headerText: "Email" },
+{ dataKey: "fax", visible:true, headerText: "Fax" },
+{ dataKey: "conven", visible:true, headerText: "Conven" },
+{ dataKey: "conventel", visible:true, headerText: "Conventel" },
+{ dataKey: "convenfax", visible:true, headerText: "Convenfax" },
+{ dataKey: "convenema", visible:true, headerText: "Convenema" },
+{ dataKey: "concom", visible:true, headerText: "Concom" },
+{ dataKey: "concomtel", visible:true, headerText: "Concomtel" },
+{ dataKey: "concomfax", visible:true, headerText: "Concomfax" },
+{ dataKey: "concomema", visible:true, headerText: "Concomema" },
+{ dataKey: "diacre", visible:true, headerText: "Diacre" },
+{ dataKey: "despropag", visible:true, headerText: "Despropag" },
+{ dataKey: "limcre", visible:true, headerText: "Limcre" },
+{ dataKey: "observaciones", visible:true, headerText: "Observaciones" }
 			]
 		});
 		

@@ -4,6 +4,7 @@ class pedidoint extends Controlador{
 	var $modelo="pedidoint";
 	var $campos=array('idpedidoint','idalmacen','fecha','vencimiento','idestado','serie','folio');
 	var $pk="idpedidoint";
+	var $nombre="pedidoint";
 	
 	function nuevo(){		
 		$campos=$this->campos;

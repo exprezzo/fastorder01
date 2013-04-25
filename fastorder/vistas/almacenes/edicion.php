@@ -34,11 +34,11 @@
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">id:</label>
+			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Id:</label>
 			<input type="text" name="id" class="txt_id" value="<?php echo $this->datos['id']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">nombre:</label>
+		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<label style="">Nombre:</label>
 			<input type="text" name="nombre" class="txt_nombre" value="<?php echo $this->datos['nombre']; ?>" style="width:500px;" />
 		</div>
 		</form>

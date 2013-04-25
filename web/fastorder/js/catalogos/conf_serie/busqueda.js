@@ -12,6 +12,7 @@
 	$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+
 			data: params
 		}).done(function( response ) {		
 			var resp = eval('(' + response + ')');
@@ -49,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("Â¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -101,7 +102,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("¿Eliminar?");
+						var r=confirm("?liminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -123,7 +124,7 @@
 						
 					break;
 					case 'imprimir':
-						alert("Imprimir en construcción");
+						alert("Imprimir en construcciÃ³n");
 					break;
 				}
 				
@@ -168,6 +169,17 @@
 			data:dataSource,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "idconf_serie", visible:true, headerText: "Idconf_serie" },
+{ dataKey: "serie", visible:true, headerText: "Serie" },
+{ dataKey: "folio_i", visible:true, headerText: "Folio_i" },
+{ dataKey: "folio_f", visible:true, headerText: "Folio_f" },
+{ dataKey: "sig_folio", visible:true, headerText: "Sig_folio" },
+{ dataKey: "es_default", visible:true, headerText: "Es_default" },
+{ dataKey: "idalmacen", visible:true, headerText: "Idalmacen" },
+{ dataKey: "proceso", visible:true, headerText: "Proceso" },
+{ dataKey: "idempresa", visible:true, headerText: "Idempresa" },
+{ dataKey: "idsucursal", visible:true, headerText: "Idsucursal" }
 			]
 		});
 		

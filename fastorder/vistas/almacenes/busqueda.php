@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'almacenes'
+
 			},			
 			pk:"id"
 			
