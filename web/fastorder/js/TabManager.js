@@ -1,8 +1,9 @@
 var tab_counter = 1; 
 var TabManager={
 	init:function(target){
-		$tabs = $(target).wijtabs({			
-		   tabTemplate: '<li><a  href="#{href}">#{label}</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>',
+		$tabs = $(target).wijtabs({	
+			alignment:'left',
+			tabTemplate: '<li><a  href="#{href}">#{label}</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>',
 		    beforeremove: function (e, params) { 
 				//obtener el tab con ese index, ejecutarle la funcion beforeclose, si es que tiene
 				var tab=$(params.el).data('tabObj');				
@@ -31,6 +32,8 @@ var TabManager={
 		var tabId = 'tabs-' + tab_counter;
 		
 		var objId = url+'?id='+id;
+		// console.log(objId); console.log("objId");
+		
 		objId = objId.toLowerCase();
 		if (id!=0){
 			if ( this.seleccionarTab(objId) == true)
@@ -71,19 +74,27 @@ var TabManager={
 		});
 	},
 	seleccionarTab:function(objId){
+		// alert("asasd");
+		var selector='#tabs > .wijmo-wijtabs-content div[objId="'+objId+'"]';
+		var tabListaPedidos = $(selector); //role="tabPanel",		
 		
-		var tabListaPedidos = $('#tabs > div[objId="'+objId+'"]'); //role="tabPanel",		
-		if (tabListaPedidos.length == 0){			
+		 // console.log('selector');  console.log(selector);
+		 // console.log('tabListaPedidos'); console.log(tabListaPedidos );
+		 // alert(tabListaPedidos.length);
+		if (tabListaPedidos.length == 0){
 			return false;
-		}else if (tabListaPedidos.length > 0){ //Seleccionar el tab											
-			
-			var tabs = $('#tabs > div[role="tabpanel"]');
+		}else if (tabListaPedidos.length > 0){ //Seleccionar el tab
+			var tabs = $('#tabs > .wijmo-wijtabs-content div[role="tabpanel"]');
 			//busca el indice del tab
 			var idTab=$(tabListaPedidos).attr('id');
 			
 			var tabs=$('#tabs > div');
+			
+			// $('.lnkVendidos').tablink();
+			
+			console.log("tabs"); console.log(tabs);
 			for(var i=0; i<tabs.length; i++){
-				if ( $(tabs[i]).attr('id') == idTab ){										
+				if ( $(tabs[i]).attr('id') == idTab ){
 					$("#tabs").wijtabs('select', i);
 					return true;
 				}
