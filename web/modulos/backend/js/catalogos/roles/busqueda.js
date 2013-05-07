@@ -1,4 +1,4 @@
-﻿var Busquedaseguridad=function(){
+﻿var Busquedaroles=function(){
 	this.tituloNuevo='Nueva';
 	this.eliminar=function(){
 	
@@ -171,10 +171,7 @@
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:true, headerText: "Id" },
-{ dataKey: "fk_user", visible:true, headerText: "Fk_user" },
-{ dataKey: "modulo", visible:true, headerText: "Modulo" },
-{ dataKey: "controlador", visible:true, headerText: "Controlador" },
-{ dataKey: "accion", visible:true, headerText: "Accion" }
+{ dataKey: "rol", visible:true, headerText: "Rol" }
 			]
 		});
 		

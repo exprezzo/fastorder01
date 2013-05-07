@@ -44,7 +44,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 	<script src="<?php echo $_APP_PATH; ?>web/libs/shortcut.js"></script>  
 	
 	<script src="<?php echo $_APP_PATH; ?>web/modulos/backend/js/funciones.js" type="text/javascript"></script>
-	<script src="<?php echo $_APP_PATH; ?>web/portal/js/TabManager.js" type="text/javascript"></script>	
+	<script src="<?php echo $_APP_PATH; ?>web/fastorder/js/TabManager.js" type="text/javascript"></script>	
 	
 	<script type="text/javascript">		
 		kore={
@@ -172,7 +172,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			<?php 
 			if ( $_SESSION['userInfo']['rol']==1 || $_SESSION['userInfo']['rol']==2 || $_SESSION['userInfo']['rol']==3 ){
 			?>
-			TabManager.add(kore.mod_url_base+'reportes/menu','Reportes',1);
+			// TabManager.add(kore.mod_url_base+'reportes/menu','Reportes',1);
 			<?php
 			}
 			?>

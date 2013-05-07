@@ -1,4 +1,4 @@
-﻿var Edicioncatalogos = function(){
+﻿var Edicionroles = function(){
 	this.editado=false;
 	this.saveAndClose=false;
 	
@@ -211,10 +211,10 @@
 				var msg= (resp.msg)? resp.msg : '';
 				var title;
 				if ( resp.success == true	){					
-					icon=kore.url_base+'/web/'+kore.modulo+'/images/yes.png';
+					icon=kore.url_base+'web/'+kore.modulo+'/images/yes.png';
 					title= 'Success';									
 				}else{
-					icon= kore.url_base+'/web/'+kore.modulo+'/images/error.png';
+					icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
 					title= 'Error';
 				}
 				

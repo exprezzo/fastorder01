@@ -10,6 +10,6 @@ $DB_CONFIG=array(
 
 $APP_CONFIG=array(
 	'nombre'=>'Fast Order',
-	'tema'=>'redmond'
+	'tema'=>'hot-sneaks'
 );
 ?>
