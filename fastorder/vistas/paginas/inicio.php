@@ -168,14 +168,10 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			ajustarTab(); //Ajusta la altura al tamaño en relacion al tamaño de la pantalla
 			iniciarLinkTabs(); //A los objetos con atributo linkTab=true,  se les agrega comportamiento ajax para abrir tabs.
 			
-			// TabManager.add(kore.mod_url_base+'usuarios2/busqueda','Usuarios',1);
-			<?php 
-			if ( $_SESSION['userInfo']['rol']==1 || $_SESSION['userInfo']['rol']==2 || $_SESSION['userInfo']['rol']==3 ){
-			?>
-			// TabManager.add(kore.mod_url_base+'reportes/menu','Reportes',1);
-			<?php
-			}
-			?>
+		  TabManager.add(kore.mod_url_base+'compra/busqueda','Compras',1);
+		  TabManager.add(kore.mod_url_base+'ordencompra/busqueda','Ordenes',1);
+		  TabManager.add(kore.mod_url_base+'pedidoint/busqueda','Pedidos',1);
+			
 			
 			$(window).resize( function() {
 			  ajustarTab();

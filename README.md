@@ -23,3 +23,11 @@ Y ejecutamos:
 	git submodule update --init core
  
 	git submodule update --init modulos/backend
+	
+Lo siguiente es importar la base de datos que se encuentra en:
+	
+	/dev_docs/database/fastorder.sql
+
+Y dependiendo de tu configuración para MySql, deberás editar el archivo
+
+	/fastorder/config.php

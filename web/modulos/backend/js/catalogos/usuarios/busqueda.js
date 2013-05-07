@@ -75,7 +75,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html(this.catalogo.nombre);		 
+	    jTab.html('Usuarios');		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -177,6 +177,7 @@
 { dataKey: "pass", visible:false, headerText: "Pass" },
 { dataKey: "email", visible:true, headerText: "Email" },
 { dataKey: "rol", visible:false, headerText: "Rol" },
+{ dataKey: "tema", visible:false, headerText: "Tema" },
 { dataKey: "fbid", visible:false, headerText: "Fbid" },
 { dataKey: "picture", visible:false, headerText: "Picture" },
 { dataKey: "originalName", visible:false, headerText: "Originalname" }

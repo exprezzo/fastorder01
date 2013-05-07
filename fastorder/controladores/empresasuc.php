@@ -2,8 +2,9 @@
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/empresasuc_modelo.php';
 class empresasuc extends Controlador{
 	var $modelo="empresasuc";
-	var $campos=array('idempresasuc','idempresa','nombre','calle','numint','numext','colonia','ciudad','estado','pais','telefono','fax','email','idempresasuczon');
+	var $campos=array('idempresasuc','nombre','calle','numint','numext','colonia','ciudad','estado','pais','telefono','fax','email','idempresasuczon');
 	var $pk="idempresasuc";
+	var $nombre="empresasuc";
 	
 	function nuevo(){		
 		$campos=$this->campos;

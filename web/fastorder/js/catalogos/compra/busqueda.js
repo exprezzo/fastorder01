@@ -75,7 +75,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html(this.catalogo.nombre);		 
+	    jTab.html('Compras');		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -167,30 +167,32 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
+			showFilter:true,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
-{ dataKey: "idcompra", visible:true, headerText: "Idcompra" },
-{ dataKey: "idproveedor", visible:true, headerText: "Idproveedor" },
-{ dataKey: "idalmacen", visible:true, headerText: "Idalmacen" },
-{ dataKey: "idcxp", visible:true, headerText: "Idcxp" },
-{ dataKey: "tipo", visible:true, headerText: "Tipo" },
+{ dataKey: "idcompra", visible:false, headerText: "Idcompra" },
+{ dataKey: "estado", visible:true, headerText: "Estado" },
+{ dataKey: "idalmacen", visible:false, headerText: "Idalmacen" },
+{ dataKey: "idcxp", visible:false, headerText: "Idcxp" },
+{ dataKey: "tipo", visible:false, headerText: "Tipo" },
 { dataKey: "serie", visible:true, headerText: "Serie" },
 { dataKey: "folio", visible:true, headerText: "Folio" },
-{ dataKey: "documento", visible:true, headerText: "Documento" },
+{ dataKey: "documento", visible:false, headerText: "Documento" },
+{ dataKey: "idproveedor", visible:true, headerText: "Proveedor" },
 { dataKey: "fecha", visible:true, headerText: "Fecha" },
 { dataKey: "fechavence", visible:true, headerText: "Fechavence" },
-{ dataKey: "descuento", visible:true, headerText: "Descuento" },
-{ dataKey: "subtotal", visible:true, headerText: "Subtotal" },
-{ dataKey: "impuesto1", visible:true, headerText: "Impuesto1" },
-{ dataKey: "impuesto2", visible:true, headerText: "Impuesto2" },
-{ dataKey: "impuesto3", visible:true, headerText: "Impuesto3" },
+{ dataKey: "descuento", visible:false, headerText: "Descuento" },
+{ dataKey: "subtotal", visible:false, headerText: "Subtotal" },
+{ dataKey: "impuesto1", visible:false, headerText: "Impuesto1" },
+{ dataKey: "impuesto2", visible:false, headerText: "Impuesto2" },
+{ dataKey: "impuesto3", visible:false, headerText: "Impuesto3" },
 { dataKey: "total", visible:true, headerText: "Total" },
-{ dataKey: "nota", visible:true, headerText: "Nota" },
-{ dataKey: "estado", visible:true, headerText: "Estado" },
-{ dataKey: "idinvmov", visible:true, headerText: "Idinvmov" },
-{ dataKey: "impreso", visible:true, headerText: "Impreso" },
-{ dataKey: "enviado", visible:true, headerText: "Enviado" }
+{ dataKey: "nota", visible:false, headerText: "Nota" },
+
+{ dataKey: "idinvmov", visible:false, headerText: "Idinvmov" },
+{ dataKey: "impreso", visible:false, headerText: "Impreso" },
+{ dataKey: "enviado", visible:false, headerText: "Enviado" }
 			]
 		});
 		
