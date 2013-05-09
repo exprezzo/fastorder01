@@ -67,7 +67,13 @@
 			<a tablink="true" href="/proveedor/busqueda" titulo="Proveedores" class="link">
 				<img src="http://png.findicons.com/files/icons/2257/berlin/32/suppliers.png">		 
 				<div>Proveedores</div>
-			</a>		
+			</a>
+			
+			<a tablink="true" href="/ordencompraestado/busqueda" titulo="Proveedores" class="link">
+				<img src="http://png.findicons.com/files/icons/2152/snowish/64/boot.png">		 
+				<div>Estados OC</div>
+			</a>
+			
 			
 			
 		</div>
