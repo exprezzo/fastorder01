@@ -140,7 +140,51 @@ class compra extends Controlador{
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
 	}
 	function buscar(){
+		
+		
+		
+		for($i=0; $i<sizeof($_GET['filtering']); $i++ ){
+			if ( !empty($_GET['filtering'][$i]['dataKey']) )
+			if ( $_GET['filtering'][$i]['dataKey']=='fechai' ){
+				$fechai=DateTime::createFromFormat ( 'd/m/Y' , $_GET['filtering'][$i]['filterValue'] );
+				$_GET['filtering'][$i]['filterValue']=$fechai->format('Y-m-d');
+			}
+			
+			if ( !empty($_GET['filtering'][$i]['dataKey']) )
+			if ( $_GET['filtering'][$i]['dataKey']=='fechaf' ){
+				$fechaf=DateTime::createFromFormat ( 'd/m/Y' , $_GET['filtering'][$i]['filterValue'] );
+				$_GET['filtering'][$i]['filterValue']=$fechaf->format('Y-m-d');
+			}
+		}
+		// $fechaf->format('Y-m-d')
+		
 		return parent::buscar();
+	}
+	
+	function busqueda(){
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
+				array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
+				array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idalmacen'] ) )?  $_REQUEST['idalmacen'] : 0),
+				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idsucursal'] ) )?  $_REQUEST['idsucursal'] : 0),				
+			)
+		);		
+		$serieMod=new Conf_serieModelo();
+		$res= $serieMod->obtenerSeries($params);
+		
+		$vista = $this->getVista();
+		$vista->series=$res['datos'];
+		
+		$provMod=new ProveedorModelo();
+		$res=$provMod->buscar(array() );		
+		$vista->proveedores=$res['datos'];
+		
+		$almMod=new AlmacenesModelo();
+		$res=$almMod->buscar(array() );		
+		$vista->almacenes=$res['datos'];
+		
+		$this->mostrarVista();
 	}
 }
 ?>

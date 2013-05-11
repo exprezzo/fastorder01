@@ -87,6 +87,16 @@
 	};
 	this.configurarToolbar=function(tabId){
 		var me=this;
+		$(this.tabId + ' [name="fechai"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		$(this.tabId + ' [name="fechaf"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		// $(this.tabId + ' [name="folioi"]').wijinputnumber({decimalPlaces: 0});
+		// $(this.tabId + ' [name="foliof"]').wijinputnumber({decimalPlaces: 0});
+		$(this.tabId + ' [name="folioi"]').wijtextbox();
+		$(this.tabId + ' [name="foliof"]').wijtextbox();
+		
+		$(this.tabId + ' [name="idserie"]').wijcombobox();
+		$(this.tabId + ' [name="idproveedor"]').wijcombobox();
+		$(this.tabId + ' [name="idalmacen"]').wijcombobox();
 		
 		$(this.tabId+ " > .lista_toolbar").wijribbon({
 			click: function (e, cmd) {
@@ -111,6 +121,10 @@
 						
 						var gridBusqueda=$(me.tabId+" .grid_busqueda");
 						gridBusqueda.wijgrid('ensureControl', true);
+					break;
+					case 'filtros':
+						$(me.tabId+" .filtros").toggle({duration:400});
+						// alert("mostrar filtros");
 					break;
 										
 					default:						 
@@ -139,14 +153,77 @@
 			// { name: "id"  }
 		];
 		var dataReader = new wijarrayreader(campos);
-			
+		
+		var me=this;		 
+		
 		var dataSource = new wijdatasource({
 			proxy: new wijhttpproxy({
 				url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/buscar',
 				dataType: "json"
 			}),
 			dynamic:true,
-			reader:new wijarrayreader(campos)
+			reader:new wijarrayreader(campos),
+			loading: function(e, data) { 
+				
+				var folioi=$(me.tabId + ' [name="folioi"]').val();
+				var foliof=$(me.tabId + ' [name="foliof"]').val();
+				var idserie=$(me.tabId + ' [name="idserie"]').val();
+				var idproveedor=$(me.tabId + ' [name="idproveedor"]').val();
+				var idalmacen = $(me.tabId + ' [name="idalmacen"]').val();
+				if (folioi!='')
+				data.data.filtering.push({
+					field: 'folio',
+					dataKey:'folioi',
+					filterOperator:'greaterorequal',
+					filterValue:folioi
+				});
+				
+				if (foliof!='')
+				data.data.filtering.push({
+					field: 'folio',
+					dataKey:'foliof',
+					filterOperator:'lessorequal',
+					filterValue:foliof
+				});
+				
+				data.data.filtering.push({
+					field: 'fecha',
+					dataKey:'fechai',
+					filterOperator:'greaterorequal',
+					filterValue:$(me.tabId + ' [name="fechai"]').val()
+				});
+				
+				data.data.filtering.push({
+					field: 'fecha',
+					dataKey:'fechaf',
+					filterOperator:'lessorequal',
+					filterValue:$(me.tabId + ' [name="fechaf"]').val()
+				});
+				
+				if (idalmacen!=0)
+				data.data.filtering.push({
+					dataKey: 'idalmacen',
+					// dataKey:'fechaf',
+					filterOperator:'equals',
+					filterValue:$(me.tabId + ' [name="idalmacen"]').val()
+				});
+				
+				if (idproveedor!=0)
+				data.data.filtering.push({
+					dataKey: 'idproveedor',					
+					filterOperator:'equals',
+					filterValue:$(me.tabId + ' [name="idproveedor"]').val()
+				});
+				
+				if (idserie!=0)
+				data.data.filtering.push({
+					dataKey: 'serie',					
+					filterOperator:'equals',
+					filterValue:$(me.tabId + ' [name="idserie"]').val()
+				});
+				
+				// console.log("data"); console.log(data);
+			}
 		});
 				
 		dataSource.reader.read= function (datasource) {						
@@ -158,7 +235,7 @@
 		this.dataSource=dataSource;
 		var gridBusqueda=$(this.tabId+" .grid_busqueda");
 
-		var me=this;		 
+		
 		gridBusqueda.wijgrid({
 			dynamic: true,
 			allowColSizing:true,			
@@ -167,32 +244,32 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
-			showFilter:true,
+			showFilter:false,
 			columns: [ 
-			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }										
+				{ dataKey: "idcompra", visible:false, headerText: "Idcompra" },
 				
-{ dataKey: "idcompra", visible:false, headerText: "Idcompra" },
-{ dataKey: "estado", visible:true, headerText: "Estado" },
-{ dataKey: "idalmacen", visible:false, headerText: "Idalmacen" },
-{ dataKey: "idcxp", visible:false, headerText: "Idcxp" },
-{ dataKey: "tipo", visible:false, headerText: "Tipo" },
-{ dataKey: "serie", visible:true, headerText: "Serie" },
-{ dataKey: "folio", visible:true, headerText: "Folio" },
-{ dataKey: "documento", visible:false, headerText: "Documento" },
-{ dataKey: "idproveedor", visible:true, headerText: "Proveedor" },
-{ dataKey: "fecha", visible:true, headerText: "Fecha" },
-{ dataKey: "fechavence", visible:true, headerText: "Fechavence" },
-{ dataKey: "descuento", visible:false, headerText: "Descuento" },
-{ dataKey: "subtotal", visible:false, headerText: "Subtotal" },
-{ dataKey: "impuesto1", visible:false, headerText: "Impuesto1" },
-{ dataKey: "impuesto2", visible:false, headerText: "Impuesto2" },
-{ dataKey: "impuesto3", visible:false, headerText: "Impuesto3" },
-{ dataKey: "total", visible:true, headerText: "Total" },
-{ dataKey: "nota", visible:false, headerText: "Nota" },
+				{ dataKey: "idalmacen", visible:false, headerText: "Idalmacen" },
+				{ dataKey: "idcxp", visible:false, headerText: "Idcxp" },
+				{ dataKey: "tipo", visible:false, headerText: "Tipo" },
+				{ dataKey: "serie", visible:true, headerText: "Serie y Folio" },
+				{ dataKey: "folio", visible:false, headerText: "Folio" },
+				{ dataKey: "idproveedor", visible:true, headerText: "Proveedor" },
+				{ dataKey: "documento", visible:true, headerText: "Docto" },				
+				{ dataKey: "fecha", visible:true, headerText: "Fecha" },
+				{ dataKey: "fechavence", visible:true, headerText: "Fechavence" },
+				{ dataKey: "estado", visible:true, headerText: "Estado" },
+				{ dataKey: "descuento", visible:false, headerText: "Descuento" },
+				{ dataKey: "subtotal", visible:true, headerText: "Subtotal" },
+				{ dataKey: "impuesto1", visible:false, headerText: "Iva" },
+				{ dataKey: "impuesto2", visible:false, headerText: "Impuesto2" },
+				{ dataKey: "impuesto3", visible:false, headerText: "Impuesto3" },
+				{ dataKey: "total", visible:true, headerText: "Total" },
+				{ dataKey: "nota", visible:false, headerText: "Nota" },
 
-{ dataKey: "idinvmov", visible:false, headerText: "Idinvmov" },
-{ dataKey: "impreso", visible:false, headerText: "Impreso" },
-{ dataKey: "enviado", visible:false, headerText: "Enviado" }
+				{ dataKey: "idinvmov", visible:false, headerText: "Idinvmov" },
+				{ dataKey: "impreso", visible:false, headerText: "Impreso" },
+				{ dataKey: "enviado", visible:false, headerText: "Enviado" }
 			]
 		});
 		
