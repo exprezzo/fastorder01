@@ -3,6 +3,7 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/compra_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/conf_serie_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/almacenes_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/proveedor_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/compradetalle_modelo.php';
 
 
 class compra extends Controlador{
@@ -114,10 +115,10 @@ class compra extends Controlador{
 		$model=$this->getModel();
 		$params=array(
 			$this->pk=>$id
-		);		
-		$obj=$model->obtener( $params );	
-		// $vista=$this->getVista();				
-		$vista->datos=$obj;		
+		);
+		$obj=$model->obtener( $params );
+		// $vista=$this->getVista();
+		$vista->datos=$obj;
 		
 		
 		// print_r( $obj ); exit;
@@ -131,13 +132,27 @@ class compra extends Controlador{
 		);
 		$serieMod=new Conf_serieModelo();
 		$res= $serieMod->obtenerSeries( $params );
-		// print_r( $res );
-		
-		$vista->series=$res['datos'];
+		$vista->series=$res['datos'];		
 		
 		
+		$compradetalleMod=new compradetalleModelo();
+		$nombre_campo_fk='idcompra';		
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>$nombre_campo_fk, 'filterOperator'=>'equals','filterValue'=>$obj[ $this->pk ] ),
+			)
+		);		
+		$articulos= $compradetalleMod->buscar( $params );				
+		$vista->articulos=$articulos['datos'];		
+		
+		// print_r($articulos); exit;
 		global $_PETICION;
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
+	}
+	
+	
+	function getCodigos(){
+		
 	}
 	function buscar(){
 		

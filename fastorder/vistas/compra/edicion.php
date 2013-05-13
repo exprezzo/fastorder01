@@ -1,4 +1,5 @@
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/edicion.js"></script>
+<script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/detalles_compra.js"></script>
 
 <script>
 	$( function(){
@@ -17,10 +18,24 @@
 			},
 			pk:"idcompra"
 		};
+					
 		 var editor=new Edicioncompra();
 		 editor.init(config);
 		 
+		 var tabId='#' + config.tab.id;
 		 
+		 var articulos=<?php echo json_encode($this->articulos); ?>;				
+		 var fk_compra=<?php echo $this->datos['idcompra']; ?>;				
+		 
+		 
+		 var configDet={
+			articulos:articulos,
+			tabId:tabId,
+			fk_compra:fk_compra
+		 };
+		 
+		 var detalleCompra=new DetallesCompra();
+		 detalleCompra.init(configDet);
 		
 		// console.log("series"); console.log(series);
 			 // foreach($this->series as $serie){
@@ -28,7 +43,7 @@
 							// echo '<option '.$selected.' value='.$serie['idconf_serie'].'>'.$serie['serie'].'</option>';
 							// $selected='';
 						// }
-		 
+		 // $('#' + config.tab.id + ' .detalle').wijgrid();
 		 
 		 $('#' + config.tab.id + ' [name="idproveedor"]').wijcombobox();
 		 $('#' + config.tab.id + ' [name="idalmacen"]').wijcombobox({
@@ -120,7 +135,7 @@
 	<div class="pnlIzq">
 		<?php 	
 			global $_PETICION;
-			$this->mostrar('/backend/componentes/toolbar');	
+			$this->mostrar('/backend/componentes/toolbar_edicion_maestro_detalle');	
 			if (!isset($this->datos)){		
 				$this->datos=array();		
 			}
@@ -190,65 +205,90 @@
 				<label style="">Fechavence:</label>
 				<input type="text" name="fechavence" class="txt_fechavence" value="<?php echo $this->datos['fechavence']; ?>" style="width:150px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Idcxp:</label>
-				<input type="text" name="idcxp" class="txt_idcxp" value="<?php echo $this->datos['idcxp']; ?>" style="width:500px;" />
+				<input type="text" name="idcxp" class="txt_idcxp" value="<?php // echo $this->datos['idcxp']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Tipo:</label>
-				<input type="text" name="tipo" class="txt_tipo" value="<?php echo $this->datos['tipo']; ?>" style="width:500px;" />
+				<input type="text" name="tipo" class="txt_tipo" value="<?php // echo $this->datos['tipo']; ?>" style="width:500px;" />
 			</div>
 			
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Documento:</label>
-				<input type="text" name="documento" class="txt_documento" value="<?php echo $this->datos['documento']; ?>" style="width:500px;" />
+				<input type="text" name="documento" class="txt_documento" value="<?php // echo $this->datos['documento']; ?>" style="width:500px;" />
 			</div>
 			
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Descuento:</label>
-				<input type="text" name="descuento" class="txt_descuento" value="<?php echo $this->datos['descuento']; ?>" style="width:500px;" />
+				<input type="text" name="descuento" class="txt_descuento" value="<?php // echo $this->datos['descuento']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Subtotal:</label>
-				<input type="text" name="subtotal" class="txt_subtotal" value="<?php echo $this->datos['subtotal']; ?>" style="width:500px;" />
+				<input type="text" name="subtotal" class="txt_subtotal" value="<?php // echo $this->datos['subtotal']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto1:</label>
-				<input type="text" name="impuesto1" class="txt_impuesto1" value="<?php echo $this->datos['impuesto1']; ?>" style="width:500px;" />
+				<input type="text" name="impuesto1" class="txt_impuesto1" value="<?php // echo $this->datos['impuesto1']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto2:</label>
-				<input type="text" name="impuesto2" class="txt_impuesto2" value="<?php echo $this->datos['impuesto2']; ?>" style="width:500px;" />
+				<input type="text" name="impuesto2" class="txt_impuesto2" value="<?php // echo $this->datos['impuesto2']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto3:</label>
-				<input type="text" name="impuesto3" class="txt_impuesto3" value="<?php echo $this->datos['impuesto3']; ?>" style="width:500px;" />
+				<input type="text" name="impuesto3" class="txt_impuesto3" value="<?php // echo $this->datos['impuesto3']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Total:</label>
-				<input type="text" name="total" class="txt_total" value="<?php echo $this->datos['total']; ?>" style="width:500px;" />
+				<input type="text" name="total" class="txt_total" value="<?php // echo $this->datos['total']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Nota:</label>
-				<input type="text" name="nota" class="txt_nota" value="<?php echo $this->datos['nota']; ?>" style="width:500px;" />
+				<input type="text" name="nota" class="txt_nota" value="<?php // echo $this->datos['nota']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Estado:</label>
-				<input type="text" name="estado" class="txt_estado" value="<?php echo $this->datos['estado']; ?>" style="width:500px;" />
+				<input type="text" name="estado" class="txt_estado" value="<?php // echo $this->datos['estado']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Idinvmov:</label>
-				<input type="text" name="idinvmov" class="txt_idinvmov" value="<?php echo $this->datos['idinvmov']; ?>" style="width:500px;" />
+				<input type="text" name="idinvmov" class="txt_idinvmov" value="<?php // echo $this->datos['idinvmov']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impreso:</label>
-				<input type="text" name="impreso" class="txt_impreso" value="<?php echo $this->datos['impreso']; ?>" style="width:500px;" />
+				<input type="text" name="impreso" class="txt_impreso" value="<?php // echo $this->datos['impreso']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Enviado:</label>
-				<input type="text" name="enviado" class="txt_enviado" value="<?php echo $this->datos['enviado']; ?>" style="width:500px;" />
-			</div>
+				<input type="text" name="enviado" class="txt_enviado" value="<?php // echo $this->datos['enviado']; ?>" style="width:500px;" />
+			</div-->
 
 		</form>
+		<div>
+			<table class="grid_articulos">
+			  <thead>
+				<th>Codigo</th><th>Nombre</th><th>Cantidad</th><th>Costo</th><th>Subtotal</th><th>Iva</th><th>Total</th>
+			  </thead>
+			  <tbody>
+				
+				  <?php 
+					foreach($this->articulos as $articulo){	
+					
+						echo '<tr><td>'.$articulo['codigo'].'</td>
+						<td>'.$articulo['nombre'].'</td>						
+						<td>'.$articulo['cantidad'].'</td>
+						<td>'.$articulo['costo'].'</td>
+						<td>'.$articulo['subtotal'].'</td>
+						<td>'.$articulo['impuesto1'].'</td>
+						<td>'.$articulo['total'].'</td></tr>'
+						;
+					}
+				  ?>
+				
+				
+			  </tbody>
+			</table>			
+		</div>
 	</div>
 </div>

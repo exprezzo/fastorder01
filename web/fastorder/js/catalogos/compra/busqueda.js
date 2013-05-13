@@ -50,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("�Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -112,7 +112,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("?liminar?");
+						var r=confirm("¿Eliminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -252,13 +252,28 @@
 				{ dataKey: "idalmacen", visible:false, headerText: "Idalmacen" },
 				{ dataKey: "idcxp", visible:false, headerText: "Idcxp" },
 				{ dataKey: "tipo", visible:false, headerText: "Tipo" },
-				{ dataKey: "serie", visible:true, headerText: "Serie y Folio" },
+				{ dataKey: "serie", visible:true, headerText: "Serie y Folio",
+					cellFormatter: function (args) {
+						console.log("args"); console.log(args);
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {
+							args.$container
+								.css("text-align", "center")
+								.empty()
+								.append($("<div>").html( args.row.data.nombreserie+'-'+args.row.data.folio ));
+							return true; 
+						} 
+					} 
+				},
 				{ dataKey: "folio", visible:false, headerText: "Folio" },
-				{ dataKey: "idproveedor", visible:true, headerText: "Proveedor" },
+				{ dataKey: "idproveedor", visible:false, headerText: "Proveedor" },
+				{ dataKey: "nombreProv", visible:true, headerText: "Proveedor" },
+				{ dataKey: "nombreserie", visible:false, headerText: "nombreSerie" },
+				
 				{ dataKey: "documento", visible:true, headerText: "Docto" },				
 				{ dataKey: "fecha", visible:true, headerText: "Fecha" },
 				{ dataKey: "fechavence", visible:true, headerText: "Fechavence" },
-				{ dataKey: "estado", visible:true, headerText: "Estado" },
+				{ dataKey: "estado", visible:false, headerText: "Estado" },
+				{ dataKey: "nombreEstado", visible:true, headerText: "Estado" },
 				{ dataKey: "descuento", visible:false, headerText: "Descuento" },
 				{ dataKey: "subtotal", visible:true, headerText: "Subtotal" },
 				{ dataKey: "impuesto1", visible:false, headerText: "Iva" },
