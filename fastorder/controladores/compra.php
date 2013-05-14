@@ -4,7 +4,8 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/conf_serie_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/almacenes_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/proveedor_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/compradetalle_modelo.php';
-
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/articulo_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/articulopre_modelo.php';
 
 class compra extends Controlador{
 	var $modelo="compra";
@@ -61,6 +62,25 @@ class compra extends Controlador{
 		$serieMod=new Conf_serieModelo();
 		$res= $serieMod->obtenerSeries($params);
 		echo json_encode($res);
+	}
+	
+	function buscarPresentaciones(){
+		
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>'descripcion', 'filterOperator'=>'contains','filterValue'=>$_REQUEST['descripcion'])
+			)
+		);
+		
+		$presentacionModelo = new articulopreModelo();
+		$res = $presentacionModelo->obtenerPresentaciones($params);
+		
+		
+		$respuesta=array(
+			'rows'=>$res['datos']
+		);
+		echo json_encode($respuesta);	
+		
 	}
 	
 	function guardar(){
@@ -152,7 +172,19 @@ class compra extends Controlador{
 	
 	
 	function getCodigos(){
+		$codMOd= new articuloModelo();
 		
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>'codigo', 'filterOperator'=>'contains','filterValue'=>$_REQUEST['codigo'])
+			)				
+		);
+		$res = $codMOd->buscar( $params );
+		
+		$respuesta=array(
+			'rows'=>$res['datos']
+		);
+		echo json_encode($respuesta);	
 	}
 	function buscar(){
 		

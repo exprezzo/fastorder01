@@ -56,6 +56,10 @@
 				<img src="http://png.findicons.com/files/icons/1673/diagram_part_2/64/diagram_v2_17.png">		 
 				<div>Articulos</div>
 			</a>			
+			<a tablink="true" href="/articulopre/busqueda" titulo="Presentaciones" class="link">
+				<img src="http://png.findicons.com/files/icons/2212/carpelinx/64/kwikdisk.png">		 
+				<div>Presentaciones</div>
+			</a>		
 			<a tablink="true" href="/almacenes/busqueda" titulo="Almacenes" class="link">
 				<img src="http://png.findicons.com/files/icons/2579/iphone_icons/40/warehouse.png">		 
 				<div>Almacenes</div>

@@ -37,7 +37,7 @@
 		 var detalleCompra=new DetallesCompra();
 		 detalleCompra.init(configDet);
 		
-		// console.log("series"); console.log(series);
+		
 			 // foreach($this->series as $serie){
 							// if ($serie['idconf_serie'] == $this->datos['serie'] ) $selected='selected';
 							// echo '<option '.$selected.' value='.$serie['idconf_serie'].'>'.$serie['serie'].'</option>';
@@ -69,7 +69,7 @@
 								// sig_folio: resp.datos[i].sig_folio
 							// })
 						// }
-						// console.log("datos"); console.log(datos);
+						
 						
 						var ds = $('#' + config.tab.id + ' [name="serie"]').wijcombobox('option','data');
 						datasource.data = resp.datos;
@@ -80,7 +80,7 @@
 						
 						if (resp.datos.length > 0){
 							
-							console.log( "resp.datos[0]" );  console.log( resp.datos[0] );
+							
 							$('#' + config.tab.id + ' [name="serie"]').wijcombobox("option","selectedIndex", -1);
 							$('#' + config.tab.id + ' [name="serie"]').wijcombobox("option","selectedIndex", 0);
 							// $('#' + config.tab.id + ' [name="serie"]').wijcombobox("option","text", "SELECCIONADO");
@@ -122,7 +122,7 @@
 				$('#' + config.tab.id + ' [name="folio"]').val( item.sig_folio );
 				$('#' + config.tab.id + ' [name="serie"]').wijcombobox("repaint");
 				
-				console.log("item"); console.log(item);
+				
 				$('#' + config.tab.id + ' [name="serie"]').wijcombobox("option", "text", "comboboText");
 			}
 		 });

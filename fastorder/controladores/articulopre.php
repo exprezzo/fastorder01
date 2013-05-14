@@ -2,8 +2,9 @@
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/articulopre_modelo.php';
 class articulopre extends Controlador{
 	var $modelo="articulopre";
-	var $campos=array('idarticulopre','idarticulo','descripcion','factor','ultimocosto','default');
+	var $campos=array('idarticulopre','idarticulo','descripcion','factor','ultimocosto');
 	var $pk="idarticulopre";
+	var $nombre="articulopre";
 	
 	function nuevo(){		
 		$campos=$this->campos;

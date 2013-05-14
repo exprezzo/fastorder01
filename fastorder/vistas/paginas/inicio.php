@@ -265,6 +265,10 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 		.wijmo-wijgrid-filter-trigger{
 			background:black !important;
 		}
+		
+		.eliminado,  .eliminado .ui-state-highlight{
+			color:red;
+		}
 	</style>	
 </head>
 <body style="padding:0; margin:0;" class="" >	

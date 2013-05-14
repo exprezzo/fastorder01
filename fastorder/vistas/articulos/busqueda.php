@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'articulo'
+
 			},			
 			pk:"idarticulo"
 			

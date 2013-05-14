@@ -4,6 +4,7 @@ class articulos extends Controlador{
 	var $modelo="articulo";
 	var $campos=array('idarticulo','nombre','activo','presentacion','codigo','idarticuloclase','inventariable','impuesto1','impuesto2','impuesto3','costo','precio','puntos','usado','periodo','kilometraje','idsublinea','idcategoria','idlinea','idgrupo','idtemporada','iddepartamento','idtipo','info','fechaalta','nombrebot','imagenbot','fechainv','puntoscompra','ultimocosto','utilidadminima','comision','comisionmax','costomax');
 	var $pk="idarticulo";
+	var $nombre="articulos";
 	
 	function nuevo(){		
 		$campos=$this->campos;

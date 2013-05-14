@@ -15,6 +15,7 @@
 			},
 			catalogo:{
 				nombre:'articulopre'
+
 			},			
 			pk:"idarticulopre"
 			

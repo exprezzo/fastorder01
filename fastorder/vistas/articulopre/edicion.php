@@ -34,25 +34,31 @@
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idarticulopre:</label>
-			<input type="text" name="idarticulopre" class="txt_idarticulopre" value="<?php echo $this->datos['idarticulopre']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">idarticulo:</label>
-			<input type="text" name="idarticulo" class="txt_idarticulo" value="<?php echo $this->datos['idarticulo']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">descripcion:</label>
-			<input type="text" name="descripcion" class="txt_descripcion" value="<?php echo $this->datos['descripcion']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">factor:</label>
-			<input type="text" name="factor" class="txt_factor" value="<?php echo $this->datos['factor']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">ultimocosto:</label>
-			<input type="text" name="ultimocosto" class="txt_ultimocosto" value="<?php echo $this->datos['ultimocosto']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;" autoFocus >
-			<label style="">default:</label>
-			<input type="text" name="default" class="txt_default" value="<?php echo $this->datos['default']; ?>" style="width:500px;" />
-		</div>
+			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Idarticulopre:</label>
+	<input type="text" name="idarticulopre" class="txt_idarticulopre" value="<?php echo $this->datos['idarticulopre']; ?>" style="width:500px;" />
+</div>
+<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Idarticulo:</label>
+	<input type="text" name="idarticulo" class="txt_idarticulo" value="<?php echo $this->datos['idarticulo']; ?>" style="width:500px;" />
+</div>
+<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Descripcion:</label>
+	<input type="text" name="descripcion" class="txt_descripcion" value="<?php echo $this->datos['descripcion']; ?>" style="width:500px;" />
+</div>
+<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Factor:</label>
+	<input type="text" name="factor" class="txt_factor" value="<?php echo $this->datos['factor']; ?>" style="width:500px;" />
+</div>
+<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Ultimocosto:</label>
+	<input type="text" name="ultimocosto" class="txt_ultimocosto" value="<?php echo $this->datos['ultimocosto']; ?>" style="width:500px;" />
+</div>
+<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Default:</label>
+	<input type="text" name="default" class="txt_default" value="<?php // echo $this->datos['default']; ?>" style="width:500px;" />
+</div-->
+
 		</form>
 	</div>
 </div>

@@ -6,6 +6,7 @@ var DetallesCompra=function (tabId){
 		
 		var tabId=config.tabId, 
 			padre = config.fk_compra, 
+			fk_compra=config.fk_compra, 
 			articulos= config.articulos;
 		
 		this.tmp_id=0;
@@ -13,7 +14,7 @@ var DetallesCompra=function (tabId){
 		this.padre=padre;
 		// this.configurarFormulario(tabId);	
 		this.configurarGrid(tabId, articulos);		
-		// this.configurarToolbar(tabId);		
+		 this.configurarToolbar(tabId);		
 		
 		return true;
 		
@@ -52,14 +53,14 @@ var DetallesCompra=function (tabId){
 		var myReader = new wijarrayreader(fields);
 		
 		var proxy = new wijhttpproxy({
-			url: '/'+kore.modulo+'/pedidoi/getArticulos',
+			url: kore.mod_url_base+'compra/getArticulos',
 			dataType:"json"			
 		});
 		
 		var datasource = new wijdatasource({
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,	
-			loaded: function (data) {				
+			loaded: function (data) {
 				// var val=$('#tabs '+tabId+' .txtFkAlmacen').val();
 				// $.each(data.items, function(index, datos) {					
 					// if (parseInt(val)==parseInt(datos.id) ){						
@@ -235,24 +236,34 @@ var DetallesCompra=function (tabId){
 		];
 		
 		this.fields=fields;		
-		var gridPedidos=$('#tabs '+tabId+" .grid_articulos");				
+		var gridPedidos=$(tabId+" .grid_articulos");				
 		
-		var me=this;		
+		var me=this;
+		
+		gridPedidos.bind('keydown', function(e) {
+			var code = e.keyCode || e.which;
+			code=parseInt( code );
+			// alert(e.keyCode);
+			if(e.keyCode==46){
+				me.eliminar();
+			}
+		});
 		
 		gridPedidos.wijgrid({			
 			allowColSizing:true,
 			allowPaging: true,
-			pageSize:9,
+			pageSize:100,
 			allowEditing:true,
 			allowColMoving: false,			
 			allowKeyboardNavigation:true,
 			selectionMode:'singleRow',
 			data:articulos,
 			columns: [							
+				{dataKey: "presentacion", headerText: "Presentacion",width:"300px"},
 				{dataKey: "codigo", headerText: "Codigo",width:"300px"},				
 				{dataKey: "nombre", headerText: "Art&iacute;culo",width:"300px"},				
 				{dataKey: "cantidad", headerText: "Cantidad", dataType: "number", dataFormatString: "n2"},
-				{dataKey: "costo", headerText: "Costo",editable:false, dataType: "number", dataFormatString: "n2"},
+				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "number", dataFormatString: "n2"},
 				{dataKey: "subtotal", headerText: "Subtotal",editable:false},
 				{dataKey: "impuesto1", headerText: "IVA",editable:false},
 				{dataKey: "total", headerText: "Total",editable:false},
@@ -288,7 +299,20 @@ var DetallesCompra=function (tabId){
 					return false;
 				}				
 
-				switch (args.cell.column().dataKey) { 					
+				switch (args.cell.column().dataKey) { 		
+					case "presentacion": 
+						var combo=
+						$("<input />")
+							.val(args.cell.value()) 
+							.appendTo(args.cell.container().empty());   
+						args.handled = true;   
+						
+						var domCel = args.cell.tableCell();
+						combo.css('width',	$(domCel).width()-10 );
+						combo.css('height',	$(domCel).height()-10 );
+						
+						me.configurarComboPresentacion(combo, row.data.cantidad);
+					break;
 					case "codigo": 
 						var combo=
 						$("<input />")
@@ -300,7 +324,7 @@ var DetallesCompra=function (tabId){
 						combo.css('width',	$(domCel).width()-10 );
 						combo.css('height',	$(domCel).height()-10 );
 						
-						me.configurarComboCodigo(combo);
+						me.configurarComboCodigo(combo, row.data.cantidad);
 					break;
 					case "nombre": 
 						var combo=
@@ -335,60 +359,81 @@ var DetallesCompra=function (tabId){
 						
 						if (me.articulo!=undefined){
 							var row=args.cell.row();
-							row.data.presentacion=me.articulo.presentacion;
-							row.data.fk_articulo=me.articulo.value;
-							row.data.codigo=me.articulo.codigo;
-							row.data.maximo=me.articulo.maximo;
-							row.data.minimo=me.articulo.minimo;
-							row.data.puntoreorden=me.articulo.puntoreorden;
-							row.data.existencia=me.articulo.existencia;
-							row.data.sugerido=me.articulo.sugerido;
-							row.data.pedido=me.articulo.pedido;
-							row.data.pendiente=me.articulo.pendiente;
-							row.data.nombreGpo=me.articulo.grupo;		
+							
+							row.data.idarticulo=me.articulo.idarticulo;
+							row.data.costo=me.articulo.costo;
+							row.data.impuesto1=me.articulo.impuesto1;
+							// row.data.total=me.articulo.total;
+							
+							// row.data.idarticulo=me.articulo.idarticulo;							
+							// row.data.fk_articulo=me.articulo.value;
+							// row.data.codigo=me.articulo.codigo;
+							// row.data.maximo=me.articulo.maximo;
+							// row.data.minimo=me.articulo.minimo;
+							// row.data.puntoreorden=me.articulo.puntoreorden;
+							// row.data.existencia=me.articulo.existencia;
+							// row.data.sugerido=me.articulo.sugerido;
+							// row.data.pedido=me.articulo.pedido;
+							// row.data.pendiente=me.articulo.pendiente;
+							// row.data.nombreGpo=me.articulo.grupo;		
 							// gridPedidos.wijgrid('ensureControl');
 						}
 						me.padre.editado=true;
 						break;
+					case "presentacion":
+						args.value = args.cell.container().find("input").val();
+						if (me.articulo!=undefined){
+							var row=args.cell.row();
+							row.data.idarticulo = me.articulo.idarticulo;
+							row.data.costo=me.articulo.costo;
+							row.data.impuesto1=me.articulo.impuesto1;
+							row.data.subtotal=me.articulo.subtotal;
+							row.data.total=me.articulo.total;
+							row.data.nombre=me.articulo.nombre;
+							row.data.codigo=me.articulo.codigo;
+							// row.data.presentacion=me.articulo.presentacion;
+							
+							// row.data.fk_articulo=me.articulo.value;
+							// row.data.maximo=me.articulo.maximo;
+							// row.data.minimo=me.articulo.minimo;
+							// row.data.puntoreorden=me.articulo.puntoreorden;
+							// row.data.existencia=me.articulo.existencia;
+							// row.data.sugerido=me.articulo.sugerido;
+							// row.data.pedido=me.articulo.pedido;
+							// row.data.pendiente=me.articulo.pendiente;							
+							// row.data.nombreGpo=me.articulo.grupo;
+							gridPedidos.wijgrid('ensureControl',true);
+							
+						}
+						me.padre.editado=true;
+						break;		
 					case "codigo":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
 							var row=args.cell.row();
-							row.data.presentacion=me.articulo.presentacion;
+							row.data.idarticulo = me.articulo.idarticulo;
+							row.data.costo=me.articulo.costo;
+							row.data.impuesto1=me.articulo.impuesto1;
+							row.data.subtotal=me.articulo.subtotal;
+							row.data.total=me.articulo.total;
 							row.data.nombre=me.articulo.nombre;
-							row.data.fk_articulo=me.articulo.value;
-							row.data.maximo=me.articulo.maximo;
-							row.data.minimo=me.articulo.minimo;
-							row.data.puntoreorden=me.articulo.puntoreorden;
-							row.data.existencia=me.articulo.existencia;
-							row.data.sugerido=me.articulo.sugerido;
-							row.data.pedido=me.articulo.pedido;
-							row.data.pendiente=me.articulo.pendiente;							
-							row.data.nombreGpo=me.articulo.grupo;
+							row.data.codigo=me.articulo.codigo;
+							// row.data.presentacion=me.articulo.presentacion;
+							
+							// row.data.fk_articulo=me.articulo.value;
+							// row.data.maximo=me.articulo.maximo;
+							// row.data.minimo=me.articulo.minimo;
+							// row.data.puntoreorden=me.articulo.puntoreorden;
+							// row.data.existencia=me.articulo.existencia;
+							// row.data.sugerido=me.articulo.sugerido;
+							// row.data.pedido=me.articulo.pedido;
+							// row.data.pendiente=me.articulo.pendiente;							
+							// row.data.nombreGpo=me.articulo.grupo;
 							gridPedidos.wijgrid('ensureControl',true);
-							// console.log("data"); console.log(data);
+							
 						}
 						me.padre.editado=true;
-						break;
-					case "existencia":
-						args.value=args.cell.container().find("input").val();						
-						var row=args.cell.row();
-						
-						if (args.value <= row.data.puntoreorden){
-							row.data.sugerido = row.data.maximo - args.value;
-							row.data.pendiente=row.data.sugerido-row.data.pedido
-						}else{
-							row.data.sugerido = 0;
-							row.data.pendiente=row.data.sugerido;
-						}
-						$(row.$rows).find('td:eq(7) div').html(row.data.sugerido);
-						$(row.$rows).find('td:eq(9) div').html(row.data.pendiente);
-						me.padre.editado=true;
-						break;
-					case 'pedido':
-						me.padre.editado=true;						
-					break;
-					
+						break;										
 				}
 				me.articulo=undefined;		
 			}			
@@ -428,10 +473,7 @@ var DetallesCompra=function (tabId){
                    gridPedidos.wijgrid('doRefresh');                   
                 }
             });	
-		this.numCols=$(tabId+' .grid_articulos thead th').length;
-		
-		
-		
+		this.numCols=$(tabId+' .grid_articulos thead th').length;		
 	};
 	
 	this.configurarFormulario=function(tabId){
@@ -582,7 +624,9 @@ var DetallesCompra=function (tabId){
 		
 		
 	};
-	this.configurarComboCodigo=function(target){		
+	this.configurarComboCodigo=function(target, cantidad){		
+		// alert(cantidad);
+		
 		var tabId=this.tabId;
 		var me=this;
 		var fields=[			
@@ -594,12 +638,14 @@ var DetallesCompra=function (tabId){
 			{name: 'maximo'},
 			{name: 'grupo'},
 			{name: 'puntoreorden'},
+			{name: 'impuesto1'},
+			{name: 'costo'},
 		{
 			name: 'label',
 			mapping: 'codigo'
 		}, {
 			name: 'value',
-			mapping: 'id'
+			mapping: 'idarticulo'
 		}, {
 			name: 'selected',
 			defaultValue: false
@@ -608,7 +654,7 @@ var DetallesCompra=function (tabId){
 		var myReader = new wijarrayreader(fields);
 		
 		var proxy = new wijhttpproxy({
-			url: '/'+kore.modulo+'/compra/getCodigos',
+			url: kore.mod_url_base+'compra/getCodigos',
 			dataType:"json"			
 		});
 		
@@ -620,7 +666,9 @@ var DetallesCompra=function (tabId){
 			},
 			loading: function (dataSource, userData) {                            				
 				 
-				 dataSource.proxy.options.data=dataSource.proxy.options.data || {};
+				 dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				dataSource.proxy.options.data.codigo = (userData) ?  userData.value : '';
+				 
 				 // dataSource.proxy.options.data.idalmacen = $('#tabs '+me.tabId+' .txtFkAlmacen').val();		
             }
 		});
@@ -647,20 +695,119 @@ var DetallesCompra=function (tabId){
 			{			
 				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');				
 				me.articulo=item;
-				console.log('item');console.log(item);
-				rowdom.find('td:eq(1) div').html(item.nombre);
-				rowdom.find('td:eq(2) div').html(item.presentacion);
 				
+				
+				item.subtotal=cantidad * item.costo;
+				var iva= (item.impuesto1 / 100) * item.subtotal;
+				item.total= iva + item.subtotal;
+				
+				rowdom.find('td:eq(2) div').html(item.nombre);
+				// rowdom.find('td:eq(2) div').html(item.presentacion);
+				rowdom.find('td:eq(4) div').html(item.costo);
+				rowdom.find('td:eq(5) div').html(item.subtotal);
+				rowdom.find('td:eq(6) div').html(item.impuesto1);
+				rowdom.find('td:eq(7) div').html(item.total);
+				return true;
+			}
+		});
+		combo.focus().select();			
+	};
+	this.configurarComboPresentacion=function(target, cantidad){		
+		// alert(cantidad);
+		
+		var tabId=this.tabId;
+		var me=this;
+		var fields=[			
+			{name: 'presentacionId'},			
+			{name: 'presentacionNombre'},
+			{name: 'presentacion'},
+			{name: 'idarticulopre'},
+			{name: 'nombre'},
+			{name: 'codigo'},
+			{name: 'existencia'},
+			{name: 'minimo'},
+			{name: 'maximo'},
+			{name: 'grupo'},
+			{name: 'puntoreorden'},
+			{name: 'impuesto1'},
+			{name: 'costo'},
+		{
+			name: 'label',
+			mapping: 'descripcion'
+		}, {
+			name: 'value',
+			mapping: 'idarticulopre'
+		}, {
+			name: 'selected',
+			defaultValue: false
+		}];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'compra/buscarPresentaciones',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,
+			loaded: function (data) {	
+							
+			},
+			loading: function (dataSource, userData) {                            				
+				 
+				 dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				dataSource.proxy.options.data.descripcion = (userData) ?  userData.value : '';
+				 
+				 // dataSource.proxy.options.data.idalmacen = $('#tabs '+me.tabId+' .txtFkAlmacen').val();		
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		datasource.load();	
+		
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {
+				
+			},
+			select: function (e, item) 
+			{			
+				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');				
+				me.articulo=item;
+				
+				
+				item.subtotal=cantidad * item.costo;
+				var iva= (item.impuesto1 / 100) * item.subtotal;
+				item.total= iva + item.subtotal;
+				
+				rowdom.find('td:eq(1) div').html(item.codigo);
+				rowdom.find('td:eq(2) div').html(item.nombre);
+				
+				// rowdom.find('td:eq(2) div').html(item.presentacion);
+				rowdom.find('td:eq(4) div').html(item.costo);
+				rowdom.find('td:eq(5) div').html(item.subtotal);
+				rowdom.find('td:eq(6) div').html(item.impuesto1);
+				rowdom.find('td:eq(7) div').html(item.total);
 				return true;
 			}
 		});
 		combo.focus().select();			
 	};
 	
-	
 	this.nuevo=function(){	
 		var rec={};
-		
 		$.each( this.fields, function(indexInArray, valueOfElement){
 			var campo=valueOfElement.name;
 			rec[campo]='';
@@ -669,7 +816,8 @@ var DetallesCompra=function (tabId){
 		
 		var nuevo=new Array(rec);
 		
-		var tabId=this.padre.tabId;
+		var tabId=this.tabId;
+		// console.log("this.padre"); console.log(this.padre);
 		var data= $(tabId+" .grid_articulos").wijgrid('data');									
 		this.tmp_id++;
 		nuevo[0].tmp_id=this.tmp_id;
@@ -691,10 +839,8 @@ var DetallesCompra=function (tabId){
 	
 	
 	this.configurarToolbar=function(tabId){
-		var me=this;
-		
-		$(this.tabId+ ' .btnAgregar').click(function(){		
-			
+		var me=this;		
+		$(this.tabId+ ' .btnAgregar').click(function(){					
 			me.nuevo();
 			
 		});

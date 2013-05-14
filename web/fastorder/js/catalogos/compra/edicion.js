@@ -129,13 +129,13 @@
 		
 		var selectedIndex = $(tabId + ' [name="serie"]').wijcombobox("option","selectedIndex");  
 		
-		// console.log( "selectedIndex" ); console.log( selectedIndex );
+		
 		if (selectedIndex < 0 ){
 			alert("No se pudo determinar la serie seleccionada");
 			return;
 		}
 		var ds = $(tabId + ' [name="serie"]').wijcombobox("option","data");
-		// console.log();
+		
 		
 		var selectedItem =      $(tabId + ' [name="serie"]').wijcombobox("option","data").data[selectedIndex].idconf_serie;
 		
@@ -143,11 +143,12 @@
 		//-----------------------------------
 		var datos=paramObj;		
 		//Envia los datos al servidor, el servidor responde success true o false.
+		var articulos=$(tabId+' .grid_articulos').wijgrid('data');
 		
 		$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/guardar',
-			data: { datos: datos}
+			data: { datos: datos, articulos:articulos}
 		}).done(function( response ) {
 			
 			var resp = eval('(' + response + ')');

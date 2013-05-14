@@ -11,7 +11,8 @@
 	
 	$.ajax({
 			type: "POST",
-			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+			url: kore.url_base+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/eliminar',
+
 			data: params
 		}).done(function( response ) {		
 			var resp = eval('(' + response + ')');
@@ -39,7 +40,7 @@
 		});
 }
 	this.nuevo=function(){		
-		TabManager.add('/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/nuevo',this.tituloNuevo);
+		TabManager.add(kore.url_base+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/nuevo',this.tituloNuevo);
 	};
 	this.activate=function(){
 		// vuelve a renderear estos elementos que presentaban problemas. (correccion de bug)		
@@ -49,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("Â¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -74,7 +75,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html('Articulos');		 
+	    jTab.html(this.catalogo.nombre);		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -96,12 +97,12 @@
 					case 'editar':
 						if (me.selected!=undefined){													
 							var id=me.selected[me.configuracion.pk];							
-							TabManager.add('/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar','Editar '+me.catalogo.nombre,id);
+							TabManager.add(kore.url_base+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar','Editar '+me.catalogo.nombre,id);
 						}
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("¿Eliminar?");
+						var r=confirm("?liminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -123,7 +124,7 @@
 						
 					break;
 					case 'imprimir':
-						alert("Imprimir en construcción");
+						alert("Imprimir en construcciÃ³n");
 					break;
 				}
 				
@@ -141,7 +142,7 @@
 			
 		var dataSource = new wijdatasource({
 			proxy: new wijhttpproxy({
-				url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/buscar',
+				url: kore.url_base+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/buscar',
 				dataType: "json"
 			}),
 			dynamic:true,
@@ -168,6 +169,41 @@
 			data:dataSource,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "idarticulo", visible:true, headerText: "Idarticulo" },
+{ dataKey: "nombre", visible:true, headerText: "Nombre" },
+{ dataKey: "activo", visible:true, headerText: "Activo" },
+{ dataKey: "presentacion", visible:true, headerText: "Presentacion" },
+{ dataKey: "codigo", visible:true, headerText: "Codigo" },
+{ dataKey: "idarticuloclase", visible:true, headerText: "Idarticuloclase" },
+{ dataKey: "inventariable", visible:true, headerText: "Inventariable" },
+{ dataKey: "impuesto1", visible:true, headerText: "Impuesto1" },
+{ dataKey: "impuesto2", visible:true, headerText: "Impuesto2" },
+{ dataKey: "impuesto3", visible:true, headerText: "Impuesto3" },
+{ dataKey: "costo", visible:true, headerText: "Costo" },
+{ dataKey: "precio", visible:true, headerText: "Precio" },
+{ dataKey: "puntos", visible:true, headerText: "Puntos" },
+{ dataKey: "usado", visible:true, headerText: "Usado" },
+{ dataKey: "periodo", visible:true, headerText: "Periodo" },
+{ dataKey: "kilometraje", visible:true, headerText: "Kilometraje" },
+{ dataKey: "idsublinea", visible:true, headerText: "Idsublinea" },
+{ dataKey: "idcategoria", visible:true, headerText: "Idcategoria" },
+{ dataKey: "idlinea", visible:true, headerText: "Idlinea" },
+{ dataKey: "idgrupo", visible:true, headerText: "Idgrupo" },
+{ dataKey: "idtemporada", visible:true, headerText: "Idtemporada" },
+{ dataKey: "iddepartamento", visible:true, headerText: "Iddepartamento" },
+{ dataKey: "idtipo", visible:true, headerText: "Idtipo" },
+{ dataKey: "info", visible:true, headerText: "Info" },
+{ dataKey: "fechaalta", visible:true, headerText: "Fechaalta" },
+{ dataKey: "nombrebot", visible:true, headerText: "Nombrebot" },
+{ dataKey: "imagenbot", visible:true, headerText: "Imagenbot" },
+{ dataKey: "fechainv", visible:true, headerText: "Fechainv" },
+{ dataKey: "puntoscompra", visible:true, headerText: "Puntoscompra" },
+{ dataKey: "ultimocosto", visible:true, headerText: "Ultimocosto" },
+{ dataKey: "utilidadminima", visible:true, headerText: "Utilidadminima" },
+{ dataKey: "comision", visible:true, headerText: "Comision" },
+{ dataKey: "comisionmax", visible:true, headerText: "Comisionmax" },
+{ dataKey: "costomax", visible:true, headerText: "Costomax" }
 			]
 		});
 		
@@ -183,7 +219,7 @@
 		gridBusqueda.wijgrid({ loaded: function (e) { 
 			$(me.tabId + ' .grid_busqueda tr').bind('dblclick', function (e) { 							
 				var pedidoId=me.selected[me.configuracion.pk];
-				TabManager.add('/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar','Editar '+me.catalogo.nombre,pedidoId);				
+				TabManager.add(kore.url_base+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar','Editar '+me.catalogo.nombre,pedidoId);				
 			});			
 		} });
 	};
