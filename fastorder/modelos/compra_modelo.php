@@ -7,8 +7,56 @@ class compraModelo extends Modelo{
 	function nuevo($params){
 		return parent::nuevo($params);
 	}
+	
 	function guardar($params){
-		return parent::guardar($params);
+		$articulos = ( empty($params['articulos']) )? array() : $params['articulos'];
+		
+		unset( $params['articulos'] );
+		
+		$res = parent::guardar( $params );
+		
+		if ( $res['success'] ){
+			$compraMod = new compradetalleModelo();
+			// echo 'procesar detalles';
+			foreach($articulos as $art){
+				unset( $art['nombre'] ) ;
+				unset( $art['codigo'] ) ;
+				unset( $art['costo'] ) ;
+				unset( $art['presentacion'] ) ;
+				unset( $art['dataItemIndex'] ) ;
+				unset( $art['sectionRowIndex'] ) ;
+				unset( $art['activo'] ) ;
+				unset( $art['idarticuloclase'] ) ;				
+				unset( $art['id'] ) ;
+				unset( $art['tmp_id'] ) ;
+				unset( $art['inventariable'] ) ;
+				unset( $art['puntos'] ) ;
+				unset( $art['presentacionNombre'] ) ;
+				
+				
+				$art['idcompra']=$res['datos']['idcompra'];
+				
+				if ( !empty( $art['eliminado'] ) ){
+					// print_r( $art );
+					$resp = $compraMod->eliminar( $art );
+					// print_r($resp);
+				}else{
+					unset( $art['eliminado'] ) ;
+					$compraMod->guardar( $art );
+				}			
+			}
+			
+			$compradetalleMod=new compradetalleModelo();			
+			$params=array(
+				'filtros'=>array(
+					array('dataKey'=>'idcompra', 'filterOperator'=>'equals','filterValue'=> $res['datos']['idcompra']),
+				)
+			);
+			
+			$articulos= $compradetalleMod->buscar( $params );				
+			$res['datos']['articulos'] =$articulos['datos'];		
+		}
+		return $res;
 	}
 	function borrar($params){
 		return parent::borrar($params);

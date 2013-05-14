@@ -107,7 +107,7 @@
 					
 		var idSerie=<?php echo empty($this->datos['serie'])? 0 : $this->datos['serie']; ?>;
 		
-		var idxSel=0;
+		var idxSel=-1;
 		for(var i=0; i<series.length; i++){
 			if ( series[i].idconf_serie == idSerie ) {
 				idxSel=i;
@@ -115,14 +115,14 @@
 			}
 		}
 		 
+		
+		
 		 $('#' + config.tab.id + ' [name="serie"]').wijcombobox({
-			selectedIndex:idxSel,
+			selectedIndex: (idxSel > -1)? idxSel: undefined,
 			data:datasource,
 			select:function(e, item){
 				$('#' + config.tab.id + ' [name="folio"]').val( item.sig_folio );
-				$('#' + config.tab.id + ' [name="serie"]').wijcombobox("repaint");
-				
-				
+				$('#' + config.tab.id + ' [name="serie"]').wijcombobox("repaint");							
 				$('#' + config.tab.id + ' [name="serie"]').wijcombobox("option", "text", "comboboText");
 			}
 		 });
@@ -144,66 +144,73 @@
 		<form class="frmEdicion" style="padding-top:10px;">							
 			<input type="hidden" name="idcompra" class="txt_idcompra" value="<?php echo $this->datos['idcompra']; ?>" style="width:500px;" />
 			
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Proveedor:</label>
-				<select name='idproveedor'>					
-					<?php 
-						$seleccionado=false;
-						foreach($this->proveedores as $prov){
-							if ($prov['idproveedor'] == $this->datos['idproveedor'] ){
-								$selected='selected';
-								
-							} 
-							echo '<option '.$selected.' value='.$prov['idproveedor'].'>'.$prov['nombre'].'</option>';
+			<div style="display:inline-block;">
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Almacén:</label>
+					<select name='idalmacen'>					
+						<?php 
+							$seleccionado=false;
 							$selected='';
-						}
+							foreach($this->almacenes as $alm){
+								if ($alm['id'] == $this->datos['idalmacen'] ){
+									$selected='selected';
+									$seleccionado=true;
+								} 
+								echo '<option '.$selected.' value='.$alm['id'].'>'.$alm['nombre'].'</option>';
+								$selected='';
+							}
+							if ( !$seleccionado ){
+								echo '<option value="0" selected>Seleccione un Almacén</option>';
+							}
+						?>
+					</select>				
+				</div>
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Serie:</label>
+					<select name='serie' style="width:130px;">					
 						
-						
-					?>
-				</select>				
+						<?php 
+							echo '<option value="0" selected>Seleccione una serie</option>';
+							// foreach($this->series as $serie){
+								// if ($serie['idconf_serie'] == $this->datos['serie'] ) $selected='selected';
+								// echo '<option '.$selected.' value='.$serie['idconf_serie'].'>'.$serie['serie'].'</option>';
+								// $selected='';
+							// }						
+						?>
+					</select>				
+				</div>
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Folio:</label>
+					<input readonly type="text" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:50px;" />
+				</div>
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Almacén:</label>
-				<select name='idalmacen'>					
-					<?php 
-						$seleccionado=false;
-						foreach($this->almacenes as $alm){
-							if ($alm['id'] == $this->datos['idalmacen'] ){
-								$selected='selected';
-								$seleccionado=true;
-							} 
-							echo '<option '.$selected.' value='.$alm['id'].'>'.$alm['nombre'].'</option>';
-							$selected='';
-						}
-						if ( !$seleccionado ){
-							echo '<option value="0" selected>Seleccione un Almacén</option>';
-						}
-					?>
-				</select>				
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Serie:</label>
-				<select name='serie' style="width:130px;">					
-					<?php 
-						// foreach($this->series as $serie){
-							// if ($serie['idconf_serie'] == $this->datos['serie'] ) $selected='selected';
-							// echo '<option '.$selected.' value='.$serie['idconf_serie'].'>'.$serie['serie'].'</option>';
-							// $selected='';
-						// }						
-					?>
-				</select>				
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Folio:</label>
-				<input readonly type="text" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:50px;" />
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Fecha:</label>
-				<input type="text" name="fecha" class="txt_fecha" value="<?php echo $this->datos['fecha']; ?>" style="width:150px;" />
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Fechavence:</label>
-				<input type="text" name="fechavence" class="txt_fechavence" value="<?php echo $this->datos['fechavence']; ?>" style="width:150px;" />
+			<div style="display:inline-block;">
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Proveedor:</label>
+					<select name='idproveedor'>					
+						<?php 
+							$seleccionado=false;
+							foreach($this->proveedores as $prov){
+								if ($prov['idproveedor'] == $this->datos['idproveedor'] ){
+									$selected='selected';
+									
+								} 
+								echo '<option '.$selected.' value='.$prov['idproveedor'].'>'.$prov['nombre'].'</option>';
+								$selected='';
+							}
+							
+							
+						?>
+					</select>				
+				</div>
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Fecha:</label>
+					<input type="text" name="fecha" class="txt_fecha" value="<?php echo $this->datos['fecha']; ?>" style="width:150px;" />
+				</div>
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+					<label style="">Fechavence:</label>
+					<input type="text" name="fechavence" class="txt_fechavence" value="<?php echo $this->datos['fechavence']; ?>" style="width:150px;" />
+				</div>
 			</div>
 			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Idcxp:</label>

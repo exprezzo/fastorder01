@@ -1,7 +1,7 @@
 <?php
 class conf_serieModelo extends Modelo{
 	var $tabla="conf_serie";
-	var $campos=array('idconf_serie','serie','folio_i','folio_f','sig_folio','es_default','idalmacen','proceso','idempresa','idsucursal');
+	var $campos=array('idconf_serie','serie','folio_i','folio_f','sig_folio','es_default','idalmacen','proceso','idsucursal');
 	var $pk="idconf_serie";
 	
 	function nuevo($params){

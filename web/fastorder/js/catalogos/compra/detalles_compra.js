@@ -203,7 +203,7 @@ var DetallesCompra=function (tabId){
 				}else{
 					$(me.tabId+' .frmEditInlinePedido').css('visibility','hidden');								
 				}
-				$(me.tabId+' .grid_articulos').wijgrid('ensureControl', true);				
+				$(me.tabId+' .grid_articulos').wijgrid('ensureControl', true);
 			}else{				
 				icon= '/web/'+kore.modulo+'/images/error.png';
 				title= 'Error';					
@@ -259,9 +259,9 @@ var DetallesCompra=function (tabId){
 			selectionMode:'singleRow',
 			data:articulos,
 			columns: [							
-				{dataKey: "presentacion", headerText: "Presentacion",width:"300px"},
+				{dataKey: "presentacionNombre", headerText: "Presentacion",width:"300px"},
 				{dataKey: "codigo", headerText: "Codigo",width:"300px"},				
-				{dataKey: "nombre", headerText: "Art&iacute;culo",width:"300px"},				
+				{dataKey: "nombre", headerText: "Descripci&oacute;n",width:"300px", editable:false },				
 				{dataKey: "cantidad", headerText: "Cantidad", dataType: "number", dataFormatString: "n2"},
 				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "number", dataFormatString: "n2"},
 				{dataKey: "subtotal", headerText: "Subtotal",editable:false},
@@ -274,16 +274,16 @@ var DetallesCompra=function (tabId){
 				{dataKey: "idordencompradet", headerText: "Total",visible:false},
 				{dataKey: "precio", headerText: "Total",visible:false},
 				{dataKey: "descuento", headerText: "Total",visible:false},
-				{dataKey: "impuesto2", headerText: "Total",visible:false},
+				{dataKey: "impuesto2", headerText: "impuesto2",visible:false},
 				{dataKey: "impuesto3", headerText: "Total",visible:false},
 				{dataKey: "descripcion", headerText: "Total",visible:false},
 				{dataKey: "impreso", headerText: "Impreso",visible:false},
 				{dataKey: "enviado", headerText: "Enviado",visible:false},
 				{dataKey: "activo", headerText: "Activo",visible:false},
-				{dataKey: "presentacion", headerText: "Activo",visible:false},
-				{dataKey: "idarticuloclase", headerText: "Impreso",visible:false},
-				{dataKey: "inventariable", headerText: "Enviado",visible:false},
-				{dataKey: "puntos", headerText: "Activo",visible:false},
+				{dataKey: "activo", headerText: "Activo",visible:false},
+				{dataKey: "idarticuloclase", headerText: "idarticuloclase",visible:false},
+				{dataKey: "inventariable", headerText: "inventariable",visible:false},
+				{dataKey: "puntos", headerText: "puntos",visible:false},
 			]			
 		});
 		var me=this;
@@ -300,7 +300,7 @@ var DetallesCompra=function (tabId){
 				}				
 
 				switch (args.cell.column().dataKey) { 		
-					case "presentacion": 
+					case "presentacionNombre": 
 						var combo=
 						$("<input />")
 							.val(args.cell.value()) 
@@ -380,10 +380,11 @@ var DetallesCompra=function (tabId){
 						}
 						me.padre.editado=true;
 						break;
-					case "presentacion":
+					case "presentacionNombre":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
 							var row=args.cell.row();
+							// console.log("me.articulo"); console.log(me.articulo);
 							row.data.idarticulo = me.articulo.idarticulo;
 							row.data.costo=me.articulo.costo;
 							row.data.impuesto1=me.articulo.impuesto1;
@@ -391,6 +392,7 @@ var DetallesCompra=function (tabId){
 							row.data.total=me.articulo.total;
 							row.data.nombre=me.articulo.nombre;
 							row.data.codigo=me.articulo.codigo;
+							row.data.idarticulopre = me.articulo.value;
 							// row.data.presentacion=me.articulo.presentacion;
 							
 							// row.data.fk_articulo=me.articulo.value;
@@ -407,11 +409,26 @@ var DetallesCompra=function (tabId){
 						}
 						me.padre.editado=true;
 						break;		
+					case "cantidad":
+						args.value = args.cell.container().find("input").val();
+						
+						var cantidad =  args.value;
+						var row=args.cell.row();
+						row.data.subtotal= cantidad * row.data.costo;
+						row.data.cantidad = cantidad;
+						// alert(cantidad);
+						row.data.total= ( (row.data.impuesto1 / 100) * row.data.subtotal ) + row.data.subtotal;
+						gridPedidos.wijgrid('ensureControl', true);
+						// row.data.nombre=me.articulo.nombre;
+						// row.data.codigo=me.articulo.codigo;
+					break;
 					case "codigo":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
 							var row=args.cell.row();
-							row.data.idarticulo = me.articulo.idarticulo;
+							// console.log("me.articulo"); console.log(me.articulo);
+							
+							row.data.idarticulo = me.articulo.value;
 							row.data.costo=me.articulo.costo;
 							row.data.impuesto1=me.articulo.impuesto1;
 							row.data.subtotal=me.articulo.subtotal;
@@ -722,6 +739,7 @@ var DetallesCompra=function (tabId){
 			{name: 'presentacionNombre'},
 			{name: 'presentacion'},
 			{name: 'idarticulopre'},
+			{name: 'idarticulo'},
 			{name: 'nombre'},
 			{name: 'codigo'},
 			{name: 'existencia'},

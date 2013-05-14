@@ -144,11 +144,13 @@
 		var datos=paramObj;		
 		//Envia los datos al servidor, el servidor responde success true o false.
 		var articulos=$(tabId+' .grid_articulos').wijgrid('data');
+		datos.articulos = articulos;
+		
 		
 		$.ajax({
 			type: "POST",
 			url: '/'+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/guardar',
-			data: { datos: datos, articulos:articulos}
+			data: { datos: datos}
 		}).done(function( response ) {
 			
 			var resp = eval('(' + response + ')');
@@ -162,9 +164,20 @@
 					icon='/web/'+kore.modulo+'/images/info.png';
 				}
 				
-				title= 'Success';				
+				title= 'Success';
 				// tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
+				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);				
+				
+				var articulos=resp.datos.articulos;
+				var grid=$(me.tabId+" .grid_articulos");
+				var data=grid.wijgrid('data');
+				data.length=0;
+				for(var i=0; i<articulos.length; i++){
+					data.push(articulos[i]);
+				}
+
+				grid.wijgrid('ensureControl', true);
+				
 				
 				me.actualizarTitulo();
 				me.editado=false;

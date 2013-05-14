@@ -13,26 +13,35 @@ class compra extends Controlador{
 	var $pk="idcompra";
 	var $nombre="compra";
 	
-	function nuevo(){		
+	function nuevo(){
 		$campos=$this->campos;
-		$vista=$this->getVista();				
+		$vista=$this->getVista();
 		for($i=0; $i<sizeof($campos); $i++){
 			$obj[$campos[$i]]='';
 		}
-		$vista->datos=$obj;		
+		$obj['idcompra']=0;
+		$vista->datos=$obj;
 		
 		$params=array(
 			'filtros'=>array(
 				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
 				array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
-				array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idalmacen'] ) )?  $_REQUEST['idalmacen'] : 0),
+				// array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idalmacen'] ) )?  $_REQUEST['idalmacen'] : 0),
 				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idsucursal'] ) )?  $_REQUEST['idsucursal'] : 0),				
 			)
 		);		
 		$serieMod=new Conf_serieModelo();
 		$res= $serieMod->obtenerSeries($params);
-		$vista->series=$res['datos'];
-		$vista->datos['folio'] = $res['datos'][0]['sig_folio'];
+		if ( !$res['success'] ){
+			$vista->series=array();
+			$vista->datos['folio'] = 0;
+		}else{
+			$vista->series=$res['datos'];
+			$vista->datos['folio'] = $res['datos'][0]['sig_folio'];	
+		}
+		
+		// $vista->series = ($res['success'])? $res['datos'] : array();
+		
 		
 		$provMod=new ProveedorModelo();
 		$res=$provMod->buscar(array() );		
@@ -43,6 +52,7 @@ class compra extends Controlador{
 		$vista->almacenes=$res['datos'];
 		
 		// print_r( $vista->series ); exit;
+		$vista->articulos=array();
 		
 		global $_PETICION;
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');		
@@ -53,7 +63,7 @@ class compra extends Controlador{
 		$params=array(
 			'filtros'=>array(
 				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
-				array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
+				// array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
 				array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idalmacen'] ) )?  $_REQUEST['idalmacen'] : 0),
 				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idsucursal'] ) )?  $_REQUEST['idsucursal'] : 0),				
 			)
@@ -110,16 +120,15 @@ class compra extends Controlador{
 		//------------------------------------------------------
 		
 		
-		return parent::guardar();
+		$res = parent::guardar();
+		
+		
 	}
 	function borrar(){
 		return parent::borrar();
 	}
 	function editar(){
 		$vista=$this->getVista();
-		
-		
-		
 		
 		$provMod=new ProveedorModelo();
 		$res=$provMod->buscar(array() );		
@@ -140,12 +149,11 @@ class compra extends Controlador{
 		// $vista=$this->getVista();
 		$vista->datos=$obj;
 		
-		
 		// print_r( $obj ); exit;
 		$params=array(
 			'filtros'=>array(
 				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
-				array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
+				// array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
 				array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=> $obj['idalmacen']),
 				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=> 0 ),
 			)
@@ -153,8 +161,7 @@ class compra extends Controlador{
 		$serieMod=new Conf_serieModelo();
 		$res= $serieMod->obtenerSeries( $params );
 		$vista->series=$res['datos'];		
-		
-		
+				
 		$compradetalleMod=new compradetalleModelo();
 		$nombre_campo_fk='idcompra';		
 		$params=array(
@@ -212,7 +219,7 @@ class compra extends Controlador{
 		$params=array(
 			'filtros'=>array(
 				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
-				array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
+				// array('dataKey'=>'idempresa', 'filterOperator'=>'equals','filterValue'=>1),
 				array('dataKey'=>'idalmacen', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idalmacen'] ) )?  $_REQUEST['idalmacen'] : 0),
 				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idsucursal'] ) )?  $_REQUEST['idsucursal'] : 0),				
 			)
@@ -221,7 +228,15 @@ class compra extends Controlador{
 		$res= $serieMod->obtenerSeries($params);
 		
 		$vista = $this->getVista();
-		$vista->series=$res['datos'];
+		
+		if ( !$res['success'] ){
+			$vista->series=array();
+			// $vista->datos['folio'] = 0;
+		}else{
+			$vista->series=$res['datos'];
+			// $vista->datos['folio'] = $res['datos'][0]['sig_folio'];	
+		}
+		
 		
 		$provMod=new ProveedorModelo();
 		$res=$provMod->buscar(array() );		

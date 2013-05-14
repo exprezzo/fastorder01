@@ -58,10 +58,8 @@
 		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 			<label style="">Proceso:</label>
 			<input type="text" name="proceso" class="txt_proceso" value="<?php echo $this->datos['proceso']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-			<label style="">Idempresa:</label>
-			<input type="text" name="idempresa" class="txt_idempresa" value="<?php echo $this->datos['idempresa']; ?>" style="width:500px;" />
-		</div><div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+		</div>		
+		<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 			<label style="">Idsucursal:</label>
 			<input type="text" name="idsucursal" class="txt_idsucursal" value="<?php echo $this->datos['idsucursal']; ?>" style="width:500px;" />
 		</div>

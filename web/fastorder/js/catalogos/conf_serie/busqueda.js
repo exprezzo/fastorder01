@@ -178,7 +178,7 @@
 { dataKey: "es_default", visible:true, headerText: "Es_default" },
 { dataKey: "idalmacen", visible:true, headerText: "Idalmacen" },
 { dataKey: "proceso", visible:true, headerText: "Proceso" },
-{ dataKey: "idempresa", visible:true, headerText: "Idempresa" },
+// { dataKey: "idempresa", visible:true, headerText: "Idempresa" },
 { dataKey: "idsucursal", visible:true, headerText: "Idsucursal" }
 			]
 		});

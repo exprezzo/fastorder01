@@ -58,12 +58,16 @@ class compradetalleModelo extends Modelo{
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];		
-			$sql = 'SELECT cd.*,a.nombre, a.codigo,a.costo FROM '.$this->tabla.
-			' cd LEFT JOIN articulo a ON a.idarticulo = cd.idarticulo '.
+			$sql = 'SELECT cd.*,a.nombre, a.codigo,a.costo, p.descripcion presentacionNombre FROM '.$this->tabla.
+			' cd LEFT JOIN articulo a ON a.idarticulo = cd.idarticulo 
+			 LEFT JOIN articulopre p ON p.idarticulopre = cd.idarticulopre
+			'.
 			$filtros.' limit :start,:limit';
 		}else{			
-			$sql = 'SELECT cd.*,a.nombre, a.codigo,a.costo FROM '.$this->tabla.
-			' cd LEFT JOIN articulo a ON a.idarticulo = cd.idarticulo '.
+			$sql = 'SELECT cd.*,a.nombre, a.codigo,a.costo, p.descripcion presentacionNombre FROM '.$this->tabla.
+			' cd LEFT JOIN articulo a ON a.idarticulo = cd.idarticulo 
+			 LEFT JOIN articulopre p ON p.idarticulopre = cd.idarticulopre
+			'.
 			$filtros;
 		}
 		
