@@ -258,15 +258,24 @@ var DetallesCompra=function (tabId){
 			allowKeyboardNavigation:true,
 			selectionMode:'singleRow',
 			data:articulos,
+			// showFooter: true, 
 			columns: [							
-				{dataKey: "presentacionNombre", headerText: "Presentacion",width:"300px"},
-				{dataKey: "codigo", headerText: "Codigo",width:"300px"},				
-				{dataKey: "nombre", headerText: "Descripci&oacute;n",width:"300px", editable:false },				
+				{dataKey: "presentacionNombre", headerText: "Presentacion",width:"150px"},
+				{dataKey: "codigo", headerText: "Codigo",width:"80px"},				
+				{dataKey: "nombre", headerText: "Descripci&oacute;n",width:"300px", editable:false },
 				{dataKey: "cantidad", headerText: "Cantidad", dataType: "number", dataFormatString: "n2"},
-				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "number", dataFormatString: "n2"},
-				{dataKey: "subtotal", headerText: "Subtotal",editable:false},
-				{dataKey: "impuesto1", headerText: "IVA",editable:false},
-				{dataKey: "total", headerText: "Total",editable:false},
+				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px"},
+				{dataKey: "subtotal", headerText: "Subtotal",editable:false, dataType: "currency", aggregate: "sum",width:"150px"},
+				{dataKey: "impuesto1", headerText: "IVA",editable:false, dataType: "number", dataFormatString: "n0",width:"70px",
+					cellFormatter: function (args) {						
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {
+							var ivaPesos= ( args.row.data.impuesto1 / 100 ) * args.row.data.subtotal;
+							args.$container.html( "$" + ivaPesos.formatMoney(2,',','.')  );
+							return true; 
+						} 
+					} 
+				},
+				{dataKey: "total", headerText: "Total",editable:false, dataType: "currency", aggregate: "sum", width:"150px"},
 				{dataKey: "idcompradetalle", headerText: "Total",visible:false},
 				{dataKey: "idcompra", headerText: "Total",visible:false},
 				{dataKey: "idarticulo", headerText: "Total",visible:false},
@@ -288,8 +297,7 @@ var DetallesCompra=function (tabId){
 		});
 		var me=this;
 		
-		gridPedidos.wijgrid({ 
-			beforeCellEdit: function(e, args) {
+		gridPedidos.wijgrid({ beforeCellEdit: function(e, args) {
 				var row = args.cell.row() ;								
 				var index = args.cell.rowIndex();				
 				var sel=gridPedidos.wijgrid('selection');				
@@ -456,6 +464,28 @@ var DetallesCompra=function (tabId){
 			}			
 		});
 		
+		gridPedidos.wijgrid({loaded: function () {
+			var datos=gridPedidos.wijgrid('data');
+			
+			var subtotal=0, iva=0,total=0, ivaPesos=0;
+			for(var i=0; i<datos.length; i++ ){
+				subtotal+= ( datos[i].subtotal * 1);
+				total+= (datos[i].total * 1);
+				
+				ivaPesos = datos[i].subtotal * ( datos[i].impuesto1 / 100 );
+				
+				iva+= ivaPesos;
+			}
+			
+			$(me.tabId+' [name="subtotal"]').val(subtotal);
+			$(me.tabId+' [name="impuesto1"]').val(iva);
+			$(me.tabId+' [name="total"]').val(total);
+			
+			$(me.tabId+' .subtotalPreview').val( "$" +subtotal.formatMoney(2,',','.') );
+			$(me.tabId+' .ivaPreview').val( "$" +iva.formatMoney(2,',','.') );
+			$(me.tabId+' .totalPreview').val( "$" + total.formatMoney(2,',','.') );
+		}}); 
+
 		gridPedidos.wijgrid({cancelEdit:function(){				
 				$(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);
 			}

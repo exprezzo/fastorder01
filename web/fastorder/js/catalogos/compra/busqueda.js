@@ -1,5 +1,73 @@
 ﻿var Busquedacompra=function(){
 	this.tituloNuevo='Nueva';
+	this.configComboAlmacen=function(datasource){
+		var me=this;
+		 $( this.tabId + ' [name="idalmacen"]').wijcombobox({
+			select:function(e, item){
+				var params={
+					idalmacen: item.value
+				};				
+				$.ajax({
+				  url: "/compra/getSeries",
+				  cache: false,
+				  data:params
+				}).done(function( response ) {
+					var resp = eval('(' + response + ')');
+					if (resp.success){						
+						// $(this.tabId + ' [name="folio"]').val('');																	
+						
+						// var datasource = $(me.tabId + ' [name="idserie"]').wijcombobox('option','data');
+						resp.datos.push({idconf_serie:0,serie:'todas' });
+						datasource.data = resp.datos;
+						datasource.read();						
+						if (resp.datos.length > 0){
+							 // alert( resp.datos[0]['idconf_serie'] );
+							$(me.tabId + ' [name="idserie"]').wijcombobox("option","selectedIndex", -1);
+							$(me.tabId + ' [name="idserie"]').wijcombobox("option","selectedIndex", 0);							
+							// $(me.tabId + ' [name="idserie"]').val(resp.datos[0]['idconf_serie']);
+						}
+					}					
+				});
+			}
+		 });
+	}
+	this.configComboSerie=function(series, idSerie){
+		
+		var myReader = new wijarrayreader([{name: 'label', mapping: 'serie'}, {name: 'value', mapping: 'idconf_serie'}, {name: 'sig_folio'}]);		 		 
+		// var series=<?php echo json_encode($this->series) ?>;
+		
+		
+		var datasource = new wijdatasource({
+		    reader: myReader,
+		    data: series,		
+		    loaded: function (data){
+                // get items by data.items
+//                 var items = data.items;
+            }
+		});
+					
+		// var idSerie=<?php echo empty($this->datos['serie'])? 0 : $this->datos['serie']; ?>;
+		this.serieDS = datasource;
+		var idxSel=-1;
+		for(var i=0; i<series.length; i++){
+			if ( series[i].idconf_serie == idSerie ) {
+				idxSel=i;
+				break;
+			}
+		}
+		 
+		
+		
+		 $(this.tabId + ' [name="idserie"]').wijcombobox({
+			selectedIndex: (idxSel > -1)? idxSel: undefined,
+			data:datasource,
+			select:function(e, item){
+				// $( this.tabId + ' [name="folio"]').val( item.sig_folio );
+				$( this.tabId + ' [name="idserie"]').wijcombobox("repaint");							
+				// $( this.tabId + ' [name="idserie"]').wijcombobox("option", "text", "comboboText");
+			}
+		 });
+	},	
 	this.eliminar=function(){
 	
 	var me=this;
@@ -83,7 +151,10 @@
 		$('div'+tabId).css('border','0 1px 1px 1px');			
 		//-------------------------------------------				
 		this.configurarToolbar(tabId);		
-		 this.configurarGrid(tabId);
+		this.configurarGrid(tabId);
+		this.configComboSerie(config.series, config.idSerie);
+		
+		this.configComboAlmacen( this.serieDS ); // this.serieDS es el datasource del combo serie
 	};
 	this.configurarToolbar=function(tabId){
 		var me=this;
@@ -167,7 +238,26 @@
 				
 				var folioi=$(me.tabId + ' [name="folioi"]').val();
 				var foliof=$(me.tabId + ' [name="foliof"]').val();
-				var idserie=$(me.tabId + ' [name="idserie"]').val();
+				// var idserie=$(me.tabId + ' [name="idserie"]').val();
+				
+				//----------------------
+				var selectedIndex = $(me.tabId + ' [name="idserie"]').wijcombobox("option","selectedIndex"); 
+				var idserie='';
+				if (selectedIndex != null && selectedIndex > -1 ){					
+					var dataSerie=$(me.tabId + ' [name="idserie"]').wijcombobox("option","data");
+					
+					if (dataSerie.data){
+						idserie =     dataSerie.data[selectedIndex].idconf_serie;
+					}else if (dataSerie[selectedIndex] ){
+						idserie =     dataSerie[selectedIndex].value;
+					}					
+					
+					console.log("dataSerie"); console.log(dataSerie);
+					console.log("idserie"); console.log(idserie);
+				}
+				
+				
+				//----------------------
 				var idproveedor=$(me.tabId + ' [name="idproveedor"]').val();
 				var idalmacen = $(me.tabId + ' [name="idalmacen"]').val();
 				if (folioi!='')
@@ -202,8 +292,8 @@
 				
 				if (idalmacen!=0)
 				data.data.filtering.push({
-					dataKey: 'idalmacen',
-					// dataKey:'fechaf',
+					 dataKey: 'idalmacen',
+					 field:'c.idalmacen',
 					filterOperator:'equals',
 					filterValue:$(me.tabId + ' [name="idalmacen"]').val()
 				});
@@ -217,12 +307,13 @@
 				
 				if (idserie!=0)
 				data.data.filtering.push({
-					dataKey: 'serie',					
+					dataKey: 'serie',
+					field:'c.serie',
 					filterOperator:'equals',
-					filterValue:$(me.tabId + ' [name="idserie"]').val()
+					filterValue:idserie
 				});
 				
-				// console.log("data"); console.log(data);
+				
 			}
 		});
 				
@@ -247,14 +338,12 @@
 			showFilter:false,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }										
-				{ dataKey: "idcompra", visible:false, headerText: "Idcompra" },
-				
+				{ dataKey: "idcompra", visible:false, headerText: "Idcompra" },				
 				{ dataKey: "idalmacen", visible:false, headerText: "Idalmacen" },
 				{ dataKey: "idcxp", visible:false, headerText: "Idcxp" },
 				{ dataKey: "tipo", visible:false, headerText: "Tipo" },
 				{ dataKey: "serie", visible:true, headerText: "Serie y Folio",
-					cellFormatter: function (args) {
-						console.log("args"); console.log(args);
+					cellFormatter: function (args) {						
 						if (args.row.type & $.wijmo.wijgrid.rowType.data) {
 							args.$container
 								.css("text-align", "center")
@@ -267,21 +356,63 @@
 				{ dataKey: "folio", visible:false, headerText: "Folio" },
 				{ dataKey: "idproveedor", visible:false, headerText: "Proveedor" },
 				{ dataKey: "nombreProv", visible:true, headerText: "Proveedor" },
-				{ dataKey: "nombreserie", visible:false, headerText: "nombreSerie" },
-				
+				{ dataKey: "nombreserie", visible:false, headerText: "nombreSerie" },				
 				{ dataKey: "documento", visible:true, headerText: "Docto" },				
-				{ dataKey: "fecha", visible:true, headerText: "Fecha" },
-				{ dataKey: "fechavence", visible:true, headerText: "Fechavence" },
+				{ dataKey: "fecha", visible:true, headerText: "Fecha",
+					cellFormatter: function (args) {						
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {																					
+							var d= new Date(args.row.data.fecha);														
+							var curr_date = d.getDate();
+							if (curr_date<10) curr_date = '0' + curr_date.toString();							
+							var curr_month = getMonthName(d); //Months are zero based							
+							var curr_year = d.getFullYear();
+							args.$container.html( curr_date + "/" + curr_month + "/" + curr_year );
+							return true; 
+						} 
+					}
+				},
+				{ dataKey: "fechavence", visible:true, headerText: "Fecha Vence",
+					cellFormatter: function (args) {						
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {																					
+							var d= new Date(args.row.data.fechavence);														
+							var curr_date = d.getDate();
+							if (curr_date<10) curr_date = '0' + curr_date.toString();							
+							var curr_month = getMonthName(d); //Months are zero based							
+							var curr_year = d.getFullYear();
+							args.$container.css('text-align','center').html( curr_date + "/" + curr_month + "/" + curr_year );
+							return true; 
+						} 
+					} 
+				},
 				{ dataKey: "estado", visible:false, headerText: "Estado" },
 				{ dataKey: "nombreEstado", visible:true, headerText: "Estado" },
 				{ dataKey: "descuento", visible:false, headerText: "Descuento" },
-				{ dataKey: "subtotal", visible:true, headerText: "Subtotal" },
+				{ dataKey: "subtotal", visible:true, headerText: "Subtotal", dataType: "number", dataFormatString: "n2",
+					cellFormatter: function (args) {						
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {							
+							if (  !$.isNumeric( args.row.data.subtotal) ) args.row.data.subtotal=new Number(0);
+							args.row.data.subtotal*=1;							 
+							var subtotal ="$"+args.row.data.subtotal.toFixed(2);														
+							args.$container.html( subtotal );
+							return true; 
+						} 
+					}
+				},
 				{ dataKey: "impuesto1", visible:false, headerText: "Iva" },
 				{ dataKey: "impuesto2", visible:false, headerText: "Impuesto2" },
 				{ dataKey: "impuesto3", visible:false, headerText: "Impuesto3" },
-				{ dataKey: "total", visible:true, headerText: "Total" },
+				{ dataKey: "total", visible:true, headerText: "Total", dataType: "number", dataFormatString: "n2",
+					cellFormatter: function (args) {												
+						if (args.row.type & $.wijmo.wijgrid.rowType.data) {							
+							if ( args.row.data.total ==undefined || ! $.isNumeric( args.row.data.total) ) args.row.data.total=new Number(0);							
+							args.row.data.total*=1;
+							var total="$"+args.row.data.total.toFixed(2);												
+							args.$container.html( total );
+							return true; 
+						} 
+					}
+				},
 				{ dataKey: "nota", visible:false, headerText: "Nota" },
-
 				{ dataKey: "idinvmov", visible:false, headerText: "Idinvmov" },
 				{ dataKey: "impreso", visible:false, headerText: "Impreso" },
 				{ dataKey: "enviado", visible:false, headerText: "Enviado" }

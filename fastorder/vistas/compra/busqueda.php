@@ -17,9 +17,13 @@
 				nombre:'compra'
 
 			},			
-			pk:"idcompra"
+			pk		:"idcompra",
+			series	:<?php echo json_encode($this->series) ?>,
+			idSerie	:<?php echo empty($this->datos['serie'])? 0 : $this->datos['serie']; ?>
 			
-		};				
+		};	
+		
+		
 		 var lista=new Busquedacompra();
 		 lista.init(config);		
 	});

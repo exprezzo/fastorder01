@@ -120,7 +120,7 @@ class compraModelo extends Modelo{
 			
 		
 		
-		$sql = 'SELECT COUNT(*) as total FROM '.$this->tabla.$filtros;				
+		$sql = 'SELECT COUNT(*) as total FROM '.$this->tabla.' c '.$filtros;				
 		$sth = $con->prepare($sql);
 		 
 		if ( isset($params['filtros']) ){
@@ -155,14 +155,14 @@ class compraModelo extends Modelo{
 			$sql = 'SELECT c.*, cs.serie as nombreserie,p.nombre as nombreProv,e.nombre as nombreEstado FROM '.$this->tabla.
 			' c LEFT JOIN conf_serie cs ON cs.idconf_serie = c.serie 
 			LEFT JOIN proveedor p ON p.idproveedor = c.idproveedor 
-			LEFT JOIN ordencompraestado e ON e.idordencompraestado = c.estado
+			LEFT JOIN compraestado e ON e.idcompraestado = c.estado
 			'.
 			$filtros.' limit :start,:limit';
 		}else{			
 			$sql = 'SELECT c.*, cs.serie as nombreserie,p.nombre as nombreProv,e.nombre as nombreEstado FROM '.$this->tabla.
 			' c LEFT JOIN conf_serie cs ON cs.idconf_serie = c.serie 
 			LEFT JOIN proveedor p ON p.idproveedor = c.idproveedor
-			LEFT JOIN ordencompraestado e ON e.idordencompraestado = c.estado
+			LEFT JOIN compraestado e ON e.idcompraestado = c.estado
 			'.
 			$filtros.' c LEFT JOIN conf_serie cs ON cs.idconf_serie = c.serie ';
 		}
@@ -185,7 +185,8 @@ class compraModelo extends Modelo{
 		
 		if ( !$exito ){
 			
-			return $this->getError( $sth );
+			$error = $this->getError( $sth );
+			echo 'asd'; print_r( $error ); exit;
 			// throw new Exception("Error listando: ".$sql); //TODO: agregar numero de error, crear una exception MiEscepcion
 		}
 		

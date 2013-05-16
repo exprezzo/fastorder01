@@ -1,6 +1,10 @@
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/edicion.js"></script>
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/detalles_compra.js"></script>
-
+<style>
+	.tab_compra .toolbarEdicion{
+		display:inline-block;float:right;
+	}
+</style>
 <script>
 	$( function(){
 		var config={
@@ -44,6 +48,12 @@
 							// $selected='';
 						// }
 		 // $('#' + config.tab.id + ' .detalle').wijgrid();
+		 // alert(configDet.tabId);
+		 $(configDet.tabId+' .txtObservacionesPreview').bind('change',function(){
+			// alert("change");
+			console.log(configDet.tabId + ' [name="nota"]');
+			$(configDet.tabId + ' [name="nota"]').val( $(this).val() );
+		 });
 		 
 		 $('#' + config.tab.id + ' [name="idproveedor"]').wijcombobox();
 		 $('#' + config.tab.id + ' [name="idalmacen"]').wijcombobox({
@@ -197,9 +207,7 @@
 								} 
 								echo '<option '.$selected.' value='.$prov['idproveedor'].'>'.$prov['nombre'].'</option>';
 								$selected='';
-							}
-							
-							
+							}							
 						?>
 					</select>				
 				</div>
@@ -229,32 +237,32 @@
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Descuento:</label>
 				<input type="text" name="descuento" class="txt_descuento" value="<?php // echo $this->datos['descuento']; ?>" style="width:500px;" />
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			</div-->
+			<div class="inputBox" style="display:none; margin-bottom:8px;margin-left:10px;width:100%;"  >
 				<label style="">Subtotal:</label>
-				<input type="text" name="subtotal" class="txt_subtotal" value="<?php // echo $this->datos['subtotal']; ?>" style="width:500px;" />
+				<input type="text" name="subtotal" class="txt_subtotal" value="<?php  echo $this->datos['subtotal']; ?>" style="width:500px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<div class="inputBox" style="display:none; margin-bottom:8px;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto1:</label>
-				<input type="text" name="impuesto1" class="txt_impuesto1" value="<?php // echo $this->datos['impuesto1']; ?>" style="width:500px;" />
+				<input type="text" name="impuesto1" class="txt_impuesto1" value="<?php  echo $this->datos['impuesto1']; ?>" style="width:500px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto2:</label>
 				<input type="text" name="impuesto2" class="txt_impuesto2" value="<?php // echo $this->datos['impuesto2']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Impuesto3:</label>
 				<input type="text" name="impuesto3" class="txt_impuesto3" value="<?php // echo $this->datos['impuesto3']; ?>" style="width:500px;" />
-			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			</div-->
+			<div class="inputBox" style="display:none; margin-bottom:8px;margin-left:10px;width:100%;"  >
 				<label style="">Total:</label>
-				<input type="text" name="total" class="txt_total" value="<?php // echo $this->datos['total']; ?>" style="width:500px;" />
+				<input type="text" name="total" class="txt_total" value="<?php  echo $this->datos['total']; ?>" style="width:500px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<div class="inputBox" style="display:none; margin-bottom:8px;margin-left:10px;width:100%;"  >
 				<label style="">Nota:</label>
-				<input type="text" name="nota" class="txt_nota" value="<?php // echo $this->datos['nota']; ?>" style="width:500px;" />
+				<input type="text"  name="nota" class="txt_nota" value="<?php  echo $this->datos['nota']; ?>" style="width:500px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Estado:</label>
 				<input type="text" name="estado" class="txt_estado" value="<?php // echo $this->datos['estado']; ?>" style="width:500px;" />
 			</div>
@@ -296,6 +304,28 @@
 				
 			  </tbody>
 			</table>			
+		</div>
+		<div style="margin-top:10px;">
+			<div class="" style="display:inline-block;margin-left:10px;"  >
+				<label style="display:block;" >Observaciones:</label><textarea style="width:650px; height:80px;" class="txtObservacionesPreview"><?php  echo $this->datos['nota']; ?></textarea>
+			</div>
+			<div class="" style="display:inline-block;float:right; margin-right:10px;"  >
+				<table>
+					<tr>
+						<td>Sub Total</td>
+						<td><input class="subtotalPreview" style="text-align:right;" type="text" readonly value="<?php  echo  '$'.number_format($this->datos['subtotal'],2,'.',','); ?>" /> </td>
+					</tr>
+					<tr>
+						<td>Iva</td>
+						<td><input class="ivaPreview" style="text-align:right;" type="text" readonly value="<?php  echo  '$'.number_format($this->datos['impuesto1'],2,'.',','); ?>" /></td>
+					</tr>
+					<tr>
+						<td>Total</td>
+						<td><input class="totalPreview" style="text-align:right;" type="text" readonly value="<?php  echo  '$'.number_format($this->datos['total'],2,'.',','); ?>" /></td>
+					</tr>
+				</table>
+				
+			</div>
 		</div>
 	</div>
 </div>

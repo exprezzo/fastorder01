@@ -30,8 +30,7 @@
 		var objId=params.objId;
 		
 		this.tabId= tabId;		
-		
-		
+				
 		var tab=$('div'+this.tabId);
 		//estas dos linas deben estar en la hoja de estilos
 		tab.css('padding','0');

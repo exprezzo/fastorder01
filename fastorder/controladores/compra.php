@@ -71,6 +71,7 @@ class compra extends Controlador{
 		
 		$serieMod=new Conf_serieModelo();
 		$res= $serieMod->obtenerSeries($params);
+		
 		echo json_encode($res);
 	}
 	

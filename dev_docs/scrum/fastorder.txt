@@ -1,0 +1,67 @@
+14/05/2013
+
+Caso de uso: Nueva Compra.
+
+	Precondiciones:
+
+La empresa debe tener series configuradas.
+Debe tener articulos
+Los articulos deben tener presentaciones.
+Debe tener registrados al menos un proveedor
+
+Happy Path.
+
+1.- El sistema asigna un folio automatico dependiendo del almacén seleccionado.
+2.-El usuario Selecciona un proveedor.
+3.-agrega un producto, 
+4.-modifica la cantidad
+   4.1-el sistema actualiza totales.
+5.-actualiza el costo.
+   5.1 el sistema actualiza totales.
+4.-agrega mas productos y preciona boton guardar.
+5.-El sistema verifica los datos
+6.-El sistema asigna el folio correspondiente.
+7.-El sistema guarda la compra y notifica al usuario.
+8.-El usuario cierra la compra.
+
+
+
+=========================================================================================================================================
+
+
+	Bugs:
+----------------------------------------------------------------------------------------------------
+
+
+Los formularios se abren duplicados.
+Los tabs de busqueda no muestran los iconos.
+No muestra mensaje guardar no se bajo que condiciones (algun problema relacionado con los detalles).
+
+
+busqueda: 
+
+.5	formato numerico a total y subtotal 1:11-1:41
+.5	formato fechas (d/m/Y).  2:47 - 
+.5	Mostrar descripcion del estado -4:30 
+1	al seleccionar almacen, actualizar combo series  -7:49
+	
+
+Edicion:
+1.5	Mostrar subtotal, iva y total 10:44
+.5	agregar campo observaciones 10:44
+.5      cambiar campo idsucursal a idempresasuc en la tabla conf_series y donde sea necesario (compras)
+
+x	en el grid, mostrar cantidad pendiente por surtir
+4	agregar navegacion con crud
+.5      Hacer calculo de totales al seleccionar presentacion o codigo
+.5      Asignar serie y folio al titulo al guardar
+.5	Impedir modificar serie, folio y almacen en una compra editada
+.5      Los registros sin codigo articulo deben omitirse (no guardarse)
+.5      no se esta guardando el costo del articulo.
+
+
+
+Backlog:
+	Como usuario, quiero saber cuando el sistema esta procesando la informacion y en caso de que suceda un error.
+	* Mientras guarda, agregar mascara a los formularios con la leyende, procesando, espere un momento.
+	* Devolver los errores de los modelos en forma de respuesta(success, datos, msg, tipoMsg )

@@ -106,10 +106,10 @@
 			<select name="idserie" class="txt_serie" style="">				
 				<?php
 					echo '<option value="0" selected>Todas</option>';				
-					foreach($this->series as $obj){					
-						echo '<option  value="'.$obj['idconf_serie'].'">'.$obj['serie'].'</option>';					
+					// foreach($this->series as $obj){					
+						// echo '<option  value="'.$obj['idconf_serie'].'">'.$obj['serie'].'</option>';					
 						
-					}
+					// }
 				?>
 			</select>
 		</div>

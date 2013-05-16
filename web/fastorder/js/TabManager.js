@@ -32,7 +32,7 @@ var TabManager={
 		var tabId = 'tabs-' + tab_counter;
 		
 		var objId = url+'?id='+id;
-		// console.log(objId); console.log("objId");
+		
 		
 		objId = objId.toLowerCase();
 		if (id!=0){
@@ -78,8 +78,7 @@ var TabManager={
 		var selector='#tabs > .wijmo-wijtabs-content div[objId="'+objId+'"]';
 		var tabListaPedidos = $(selector); //role="tabPanel",		
 		
-		 // console.log('selector');  console.log(selector);
-		 // console.log('tabListaPedidos'); console.log(tabListaPedidos );
+		 
 		 // alert(tabListaPedidos.length);
 		if (tabListaPedidos.length == 0){
 			return false;
@@ -92,7 +91,7 @@ var TabManager={
 			
 			// $('.lnkVendidos').tablink();
 			
-			console.log("tabs"); console.log(tabs);
+			
 			for(var i=0; i<tabs.length; i++){
 				if ( $(tabs[i]).attr('id') == idTab ){
 					$("#tabs").wijtabs('select', i);
