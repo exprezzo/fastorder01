@@ -73,14 +73,14 @@ var TabManager={
 	seleccionarTab:function(objId){
 		
 		var tabListaPedidos = $('#tabs > div[objId="'+objId+'"]'); //role="tabPanel",		
+		
+		console.log("tabListaPedidos"); console.log(tabListaPedidos);
 		if (tabListaPedidos.length == 0){			
 			return false;
-		}else if (tabListaPedidos.length > 0){ //Seleccionar el tab											
-			
+		}else if (tabListaPedidos.length > 0){ //Seleccionar el tab														
 			var tabs = $('#tabs > div[role="tabpanel"]');
 			//busca el indice del tab
-			var idTab=$(tabListaPedidos).attr('id');
-			
+			var idTab=$(tabListaPedidos).attr('id');			
 			var tabs=$('#tabs > div');
 			for(var i=0; i<tabs.length; i++){
 				if ( $(tabs[i]).attr('id') == idTab ){										
@@ -88,8 +88,6 @@ var TabManager={
 					return true;
 				}
 			}
-			
-			
 			// return true;
 		}
 	}

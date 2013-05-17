@@ -75,7 +75,9 @@ var TabManager={
 	},
 	seleccionarTab:function(objId){
 		// alert("asasd");
-		var selector='#tabs > .wijmo-wijtabs-content div[objId="'+objId+'"]';
+		var selector='#tabs > div[objId="'+objId+'"]';
+		
+		console.log("selector"); console.log(selector);
 		var tabListaPedidos = $(selector); //role="tabPanel",		
 		
 		 
