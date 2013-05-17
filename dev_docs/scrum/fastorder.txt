@@ -31,8 +31,6 @@ Happy Path.
 
 	Bugs:
 ----------------------------------------------------------------------------------------------------
-
-
 Los formularios se abren duplicados.
 Los tabs de busqueda no muestran los iconos.
 No muestra mensaje guardar no se bajo que condiciones (algun problema relacionado con los detalles).
@@ -51,13 +49,14 @@ Edicion:
 .5	agregar campo observaciones 10:44
 .5      cambiar campo idsucursal a idempresasuc en la tabla conf_series y donde sea necesario (compras)
 
-x	en el grid, mostrar cantidad pendiente por surtir
-4	agregar navegacion con crud
-.5      Hacer calculo de totales al seleccionar presentacion o codigo
-.5      Asignar serie y folio al titulo al guardar
-.5	Impedir modificar serie, folio y almacen en una compra editada
-.5      Los registros sin codigo articulo deben omitirse (no guardarse)
-.5      no se esta guardando el costo del articulo.
+x	en el grid, mostrar cantidad pendiente por surtir.
+4	agregar navegacion con tabs y enter.
+
+.5      Hacer calculo de totales al seleccionar presentacion o codigo. 10:40-11:12
+.5      Asignar serie y folio al titulo al guardar  11:12-11:33
+.5	Impedir modificar serie, folio y almacen en una compra editada 11:33- 11:37
+.5      Los registros sin codigo articulo deben omitirse (no guardarse) 11:37 - 11:40
+.5      no se esta guardando el costo del articulo. -6:01
 
 
 

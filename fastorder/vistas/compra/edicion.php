@@ -22,24 +22,20 @@
 			},
 			pk:"idcompra"
 		};
-					
-		 var editor=new Edicioncompra();
-		 editor.init(config);
 		 
-		 var tabId='#' + config.tab.id;
+		var tabId='#' + config.tab.id;
+		
 		 
 		 var articulos=<?php echo json_encode($this->articulos); ?>;				
 		 var fk_compra=<?php echo $this->datos['idcompra']; ?>;				
 		 
-		 
-		 var configDet={
+		var configDet={
 			articulos:articulos,
 			tabId:tabId,
 			fk_compra:fk_compra
-		 };
+		 };	 
 		 
-		 var detalleCompra=new DetallesCompra();
-		 detalleCompra.init(configDet);
+		
 		
 		
 			 // foreach($this->series as $serie){
@@ -139,10 +135,20 @@
 		 
 		 $('#' + config.tab.id + ' [name="fecha"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy' });
 		 $('#' + config.tab.id + ' [name="fechavence"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy' });
+		 
+		  
+		 
+		 var editor=new Edicioncompra();
+		 editor.init(config);
+		 
+		 var detalleCompra=new DetallesCompra();
+		 
+		 configDet.padre=editor;
+		 detalleCompra.init(configDet);
 	});
 </script>
 
-	<div class="pnlIzq">
+	<div class="pnlIzq" style="background:white;padding-bottom:10px;">
 		<?php 	
 			global $_PETICION;
 			$this->mostrar('/backend/componentes/toolbar_edicion_maestro_detalle');	
@@ -262,11 +268,11 @@
 				<label style="">Nota:</label>
 				<input type="text"  name="nota" class="txt_nota" value="<?php  echo $this->datos['nota']; ?>" style="width:500px;" />
 			</div>
-			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<div class="inputBox" style="margin-bottom:8px;display:none;margin-left:10px;width:100%;"  >
 				<label style="">Estado:</label>
-				<input type="text" name="estado" class="txt_estado" value="<?php // echo $this->datos['estado']; ?>" style="width:500px;" />
+				<input type="text" name="estado" class="txt_estado" value="<?php  echo $this->datos['estado']; ?>" style="width:500px;" />
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<!--div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Idinvmov:</label>
 				<input type="text" name="idinvmov" class="txt_idinvmov" value="<?php // echo $this->datos['idinvmov']; ?>" style="width:500px;" />
 			</div>
@@ -290,14 +296,14 @@
 				  <?php 
 					foreach($this->articulos as $articulo){	
 					
-						echo '<tr><td>'.$articulo['codigo'].'</td>
-						<td>'.$articulo['nombre'].'</td>						
-						<td>'.$articulo['cantidad'].'</td>
-						<td>'.$articulo['costo'].'</td>
-						<td>'.$articulo['subtotal'].'</td>
-						<td>'.$articulo['impuesto1'].'</td>
-						<td>'.$articulo['total'].'</td></tr>'
-						;
+						// echo '<tr><td>'.$articulo['codigo'].'</td>
+						// <td>'.$articulo['nombre'].'</td>						
+						// <td>'.$articulo['cantidad'].'</td>
+						// <td>'.$articulo['costo'].'</td>
+						// <td>'.$articulo['subtotal'].'</td>
+						// <td>'.$articulo['impuesto1'].'</td>
+						// <td>'.$articulo['total'].'</td></tr>'
+						// ;
 					}
 				  ?>
 				

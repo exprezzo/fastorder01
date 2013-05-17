@@ -300,7 +300,8 @@
 				
 				if (idproveedor!=0)
 				data.data.filtering.push({
-					dataKey: 'idproveedor',					
+					dataKey: 'idproveedor',			
+					field:'c.idproveedor',
 					filterOperator:'equals',
 					filterValue:$(me.tabId + ' [name="idproveedor"]').val()
 				});

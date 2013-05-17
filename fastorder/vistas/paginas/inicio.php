@@ -44,7 +44,8 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 	<script src="<?php echo $_APP_PATH; ?>web/libs/shortcut.js"></script>  
 	
 	<script src="<?php echo $_APP_PATH; ?>web/modulos/backend/js/funciones.js" type="text/javascript"></script>
-	<script src="<?php echo $_APP_PATH; ?>web/fastorder/js/TabManager.js" type="text/javascript"></script>	
+	<script src="<?php echo $_APP_PATH; ?>web/modulos/backend/js/navegacion_en_tabla_agrupada.js" type="text/javascript"></script>
+	<script src="<?php echo $_APP_PATH; ?>web/fastorder/js/TabManager.js" type="text/javascript"></script>
 	
 	<script type="text/javascript">		
 		kore={

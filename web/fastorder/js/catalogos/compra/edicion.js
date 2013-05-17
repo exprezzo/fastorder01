@@ -22,9 +22,9 @@
 		}
 	};
 	this.init=function(params){
-		this.controlador=params.controlador;
-		this.catalogo=params.catalogo;
-		this.configuracion=params;
+		this.controlador	=params.controlador;
+		this.catalogo		=params.catalogo;
+		this.configuracion	=params;
 		
 		var tabId='#'+params.tab.id;
 		var objId=params.objId;
@@ -32,7 +32,7 @@
 		this.tabId= tabId;		
 				
 		var tab=$('div'+this.tabId);
-		//estas dos linas deben estar en la hoja de estilos
+		//	estas dos linas deberian estar en la hoja de estilos
 		tab.css('padding','0');
 		tab.css('border','0 1px 1px 1px');
 		
@@ -43,7 +43,7 @@
 		this.configurarFormulario(this.tabId);
 		this.configurarToolbar(this.tabId);		
 		// this.notificarAlCerrar();			
-		this.actualizarTitulo();				
+		
 		
 		var me=this;
 		$(this.tabId + ' .frmEdicion input').change(function(){
@@ -59,9 +59,10 @@
 		});
 		
 		$(tabId+' .toolbarEdicion .boton').mouseleave(function(e){			 
-				$(this).removeClass("ui-state-hover");			
+			$(this).removeClass("ui-state-hover");			
 		});
-		
+		// alert("TIT");
+		this.actualizarTitulo();				
 		 // tab.data('tabObj',this); //Este para que?		
 	};
 	//esta funcion pasara al plugin
@@ -94,11 +95,18 @@
 	}
 	this.actualizarTitulo=function(){
 		var tabId = this.tabId;		
-		var id = $(tabId + ' .txtId').val();		
+		var id = $(tabId + ' [name="'+this.configuracion.pk+'"]').val();		
 		if (id>0){
+			var selectedIndex = $(tabId + ' [name="serie"]').wijcombobox("option","selectedIndex");  					
+			var serie =      $(tabId + ' [name="serie"]').wijcombobox("option","data").data[selectedIndex].serie;
+			var folio=$(tabId + ' [name="folio"]').val();
+			$('a[href="'+tabId+'"]').html(serie+'-'+folio);
+			
+			$(tabId + ' [name="serie"]').wijcombobox("option","disabled",true)
+			$(tabId + ' [name="idalmacen"]').wijcombobox("option","disabled",true)
 			
 		}else{
-			// $('a[href="'+tabId+'"]').html('Nuevo');
+			$('a[href="'+tabId+'"]').html('Nueva Compra');
 		}
 	}
 	this.nuevo=function(){
@@ -126,16 +134,12 @@
 		  }
 		});
 		
-		var selectedIndex = $(tabId + ' [name="serie"]').wijcombobox("option","selectedIndex");  
-		
-		
+		var selectedIndex = $(tabId + ' [name="serie"]').wijcombobox("option","selectedIndex");  		
 		if (selectedIndex < 0 ){
 			alert("No se pudo determinar la serie seleccionada");
 			return;
 		}
-		var ds = $(tabId + ' [name="serie"]').wijcombobox("option","data");
-		
-		
+		// var ds = $(tabId + ' [name="serie"]').wijcombobox("option","data");		
 		var selectedItem =      $(tabId + ' [name="serie"]').wijcombobox("option","data").data[selectedIndex].idconf_serie;
 		
 		paramObj.serie = selectedItem;
@@ -220,7 +224,7 @@
 		});
 	};	
 	this.eliminar=function(){
-		var id = $('[name="'+this.configuracion.pk+'"]').val();
+		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		var me=this;
 		
 		var params={};

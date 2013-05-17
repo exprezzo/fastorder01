@@ -7,6 +7,8 @@ var NavegacionEnTabla=function(){
 	};
 	this.seleccionarSiguienteLinea=function(){
 		console.log("seleccionarSiguienteLinea");
+		this.celdaActual.row++;
+		return this.siguientePagina();
 	};
 	
 	
@@ -118,7 +120,7 @@ var NavegacionEnTabla=function(){
 		var tds=tr.find('th');		
 		
 		this.numCols=tds.length;		
-		
+		alert(this.numCols);
 		
 		$(this.targetSelector).bind("wijgridloaded", function (e) { 
 			
@@ -166,8 +168,7 @@ var NavegacionEnTabla=function(){
 				//Saltar al siguiente registro
 				e.stopPropagation();
 				e.preventDefault();							
-				me.seleccionarSiguienteLinea();
-				
+				me.seleccionarSiguienteLinea();				
 			}else if(e.keyCode==9  && e.shiftKey){	
 				e.preventDefault();	
 				e.stopPropagation();				

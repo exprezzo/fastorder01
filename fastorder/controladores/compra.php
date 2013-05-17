@@ -20,6 +20,7 @@ class compra extends Controlador{
 			$obj[$campos[$i]]='';
 		}
 		$obj['idcompra']=0;
+		$obj['estado']=1;
 		$vista->datos=$obj;
 		
 		$params=array(

@@ -5,7 +5,7 @@ var DetallesCompra=function (tabId){
 	this.init=function(config){		
 		
 		var tabId=config.tabId, 
-			padre = config.fk_compra, 
+			padre = config.padre, 
 			fk_compra=config.fk_compra, 
 			articulos= config.articulos;
 		
@@ -13,8 +13,20 @@ var DetallesCompra=function (tabId){
 		this.tabId=tabId;
 		this.padre=padre;
 		// this.configurarFormulario(tabId);	
+		var params={
+			targetSelector:tabId+' .grid_articulos',
+			pageSize: 100,
+			padre:this
+		 };
+		var nav= new NavegacionEnAgrupada();
+		nav.init(params);
+		
+		
 		this.configurarGrid(tabId, articulos);		
-		 this.configurarToolbar(tabId);		
+		this.configurarToolbar(tabId);		
+		 
+		 
+		
 		
 		return true;
 		
@@ -221,6 +233,7 @@ var DetallesCompra=function (tabId){
 		});
 	},
 	this.configurarGrid=function(tabId, articulos){
+		// alert(tabId);
 		
 		var fields=[			
 			{ name: "codigo"},
@@ -430,6 +443,18 @@ var DetallesCompra=function (tabId){
 						// row.data.nombre=me.articulo.nombre;
 						// row.data.codigo=me.articulo.codigo;
 					break;
+					case "costo":
+						args.value = args.cell.container().find("input").val();
+						
+						var costo =  args.value;
+						var row=args.cell.row();
+						row.data.subtotal= row.data.cantidad * costo;
+						
+						row.data.total= ( (row.data.impuesto1 / 100) * row.data.subtotal ) + row.data.subtotal;
+						gridPedidos.wijgrid('ensureControl', true);
+						// row.data.nombre=me.articulo.nombre;
+						// row.data.codigo=me.articulo.codigo;
+					break;
 					case "codigo":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
@@ -521,6 +546,10 @@ var DetallesCompra=function (tabId){
                 }
             });	
 		this.numCols=$(tabId+' .grid_articulos thead th').length;		
+		
+		// $(tabId + " .grid_articulos").on("blur", ".wijmo-wijgrid-innercell input" , function(){				
+			// $(tabId + " .grid_articulos").wijgrid("endEdit");			
+		// });
 	};
 	
 	this.configurarFormulario=function(tabId){
@@ -708,15 +737,12 @@ var DetallesCompra=function (tabId){
 		var datasource = new wijdatasource({
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,
-			loaded: function (data) {	
-							
+			loaded: function (data) {
 			},
-			loading: function (dataSource, userData) {                            				
-				 
-				 dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+			loading: function (dataSource, userData) {
+				dataSource.proxy.options.data=dataSource.proxy.options.data || {};
 				dataSource.proxy.options.data.codigo = (userData) ?  userData.value : '';
-				 
-				 // dataSource.proxy.options.data.idalmacen = $('#tabs '+me.tabId+' .txtFkAlmacen').val();		
+				// dataSource.proxy.options.data.idalmacen = $('#tabs '+me.tabId+' .txtFkAlmacen').val();
             }
 		});
 		
@@ -743,6 +769,9 @@ var DetallesCompra=function (tabId){
 				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');				
 				me.articulo=item;
 				
+				item.costo*=1;
+				item.subtotal*=1;
+				item.total*=1;
 				
 				item.subtotal=cantidad * item.costo;
 				var iva= (item.impuesto1 / 100) * item.subtotal;
@@ -750,10 +779,10 @@ var DetallesCompra=function (tabId){
 				
 				rowdom.find('td:eq(2) div').html(item.nombre);
 				// rowdom.find('td:eq(2) div').html(item.presentacion);
-				rowdom.find('td:eq(4) div').html(item.costo);
-				rowdom.find('td:eq(5) div').html(item.subtotal);
-				rowdom.find('td:eq(6) div').html(item.impuesto1);
-				rowdom.find('td:eq(7) div').html(item.total);
+				rowdom.find('td:eq(4) div').html( '$'+item.costo.formatMoney(2,',','.') );
+				rowdom.find('td:eq(5) div').html( '$' + item.subtotal.formatMoney(2,',','.') );
+				rowdom.find('td:eq(6) div').html( '$'+iva.formatMoney(2,',','.') );
+				rowdom.find('td:eq(7) div').html( '$'+item.total.formatMoney(2,',','.') );
 				return true;
 			}
 		});
@@ -835,6 +864,9 @@ var DetallesCompra=function (tabId){
 				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');				
 				me.articulo=item;
 				
+				item.costo*=1;
+				item.subtotal*=1;				
+				item.total*=1;
 				
 				item.subtotal=cantidad * item.costo;
 				var iva= (item.impuesto1 / 100) * item.subtotal;
@@ -842,12 +874,11 @@ var DetallesCompra=function (tabId){
 				
 				rowdom.find('td:eq(1) div').html(item.codigo);
 				rowdom.find('td:eq(2) div').html(item.nombre);
-				
-				// rowdom.find('td:eq(2) div').html(item.presentacion);
-				rowdom.find('td:eq(4) div').html(item.costo);
-				rowdom.find('td:eq(5) div').html(item.subtotal);
-				rowdom.find('td:eq(6) div').html(item.impuesto1);
-				rowdom.find('td:eq(7) div').html(item.total);
+								
+				rowdom.find('td:eq(4) div').html( '$'+item.costo.formatMoney(2,',','.') );
+				rowdom.find('td:eq(5) div').html( '$'+item.subtotal.formatMoney(2,',','.') );
+				rowdom.find('td:eq(6) div').html( '$'+iva.formatMoney(2,',','.') );
+				rowdom.find('td:eq(7) div').html( '$'+item.total.formatMoney(2,',','.') );
 				return true;
 			}
 		});

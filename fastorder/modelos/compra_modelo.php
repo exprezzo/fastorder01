@@ -21,6 +21,7 @@ class compraModelo extends Modelo{
 			foreach($articulos as $art){
 				unset( $art['nombre'] ) ;
 				unset( $art['codigo'] ) ;
+				$art['precio'] =$art['costo'];
 				unset( $art['costo'] ) ;
 				unset( $art['presentacion'] ) ;
 				unset( $art['dataItemIndex'] ) ;
@@ -42,6 +43,7 @@ class compraModelo extends Modelo{
 					// print_r($resp);
 				}else{
 					unset( $art['eliminado'] ) ;
+					if ( !empty($art['idarticulo']) )
 					$compraMod->guardar( $art );
 				}			
 			}
@@ -186,7 +188,7 @@ class compraModelo extends Modelo{
 		if ( !$exito ){
 			
 			$error = $this->getError( $sth );
-			echo 'asd'; print_r( $error ); exit;
+			return $error;
 			// throw new Exception("Error listando: ".$sql); //TODO: agregar numero de error, crear una exception MiEscepcion
 		}
 		
